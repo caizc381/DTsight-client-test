@@ -1,0 +1,4 @@
+caseNum,groupName,fileName,accountName,idCards,newName,employeeId,age,gender,newIdCard,message,description
+case01,测试分组1,./csv/account/exportaccountrecords_idCard.xlsx,尤文韬,450881199201177321,尤文韬,HL-0001,14,1,450881199201177328,{},身份证导入
+case02,测试分组2,./csv/account/exportaccountrecords_employee.xlsx,戎蔚蓝,,戎蔚蓝,yuangonghao,34,1,,{},员工号导入
+case03,测试分组3,./csv/account/exportaccountrecords_other.xlsx,窦宝,,窦宝,,23,1,,{},其他方式导入

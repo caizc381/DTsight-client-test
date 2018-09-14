@@ -1,0 +1,3 @@
+caseNum,id,name,owner,type,message
+case01,null,挂账单位,挂账单位介绍人,1,{}
+case02,3401,挂账单位编辑,挂账单位介绍人编辑,1,{}

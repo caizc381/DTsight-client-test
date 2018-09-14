@@ -1,0 +1,2 @@
+caseNum,hospitalId,matchStatus,searchWord,rowCount,currentPage,pageSize
+case01,1,true,,-1,1,10

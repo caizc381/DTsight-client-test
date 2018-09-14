@@ -1,0 +1,4 @@
+CASENUM,ALIPAY,WEIXIN
+case01,true,false
+case02,false,true
+case03,true,true

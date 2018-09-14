@@ -1,0 +1,2 @@
+CASENUM,IDCARDLIST,MEAL_ID,EXAM_DATE,ACCOUNTNAME,GROUP,COMPANYID,bookType,changeDate,hidePrice,reduceItem,sitePay,timeRemarks,verifyFlag,smsMsgTemplate
+case01,370113198606181385#370303199202160222#620402198212052483,12002,2018-12-01,蔡从丹#骆小丫#缪鹤,tt测试组,1585,2,true,true,false,false,,true,发送短信

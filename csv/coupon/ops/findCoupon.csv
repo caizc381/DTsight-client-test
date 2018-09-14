@@ -1,0 +1,12 @@
+CASENUM,BatchNum,Status,SearchKey,RowCount,CurrentPage,PageSize
+case01,DEFAULT,NULL,NULL,-1,1,10,##默认10条分页
+case02,DEFAULT,0,NULL,-1,1,10,##未使用的栓选
+case03,DEFAULT,1,NULL,-1,1,10,##已使用的涮选
+case04,DEFAULT,2,NULL,-1,1,10,##未使用的涮选
+case05,DEFAULT,NULL,330184199211295727,-1,1,10,##身份证过滤
+case06,DEFAULT,NULL,15555555555,-1,1,10,##手机号过滤
+case07,DEFAULT,NULL,张三,-1,1,10,##姓名过滤
+case08,DEFAULT,NULL,NULL,-1,1,20,##20条分页
+
+
+

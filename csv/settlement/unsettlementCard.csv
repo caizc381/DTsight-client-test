@@ -1,0 +1,9 @@
+CASENUM,SendCardStartTime,SendCardEndTime,Hospital,Filter,SettleMode,Status,UserNameOrIdCard,Page,BatchSn
+case01,NULL,NULL,Hosptail,1,NULL,NULL,NULL,10,NULL,###默认隐藏7天发的卡
+case02,2017-12-01 00:00:00,2017-12-08 00:00:00,Hospital,0,NULL,NULL,NULL,10,NULL,###发卡时间查询
+case03,NULL,NULL,Hospital,0,NULL,NULL,NULL,10,NULL,###查询所有的发卡记录
+case04,NULL,NULL,Hosptail,0,0,NULL,NULL,10,NULL,###结算方式为按项目
+case05,NULL,NULL,Hosptail,0,NULL,NULL,620401199801013253,10,NULL,###用户身份证搜索
+case06,NULL,NULL,Hosptail,0,NULL,NULL,杨鑫平,10,NULL,###用户姓名搜索
+case07,NULL,NULL,Hosptail,0,NULL,1,NULL,10,NULL,###可用卡查询
+case08,NULL,NULL,Hosptail,0,NULL,NULL,NULL,10,BatchSn,###默认隐藏7天发的卡+修改结算批次进入页面（包括已经结算的批次内的卡信息)

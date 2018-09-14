@@ -1,0 +1,5 @@
+CASENUM,Name,quantity,price,min_limit_price,organizationId,receive_limit_num,start_time,end_time,description,source,ower_id,limitTypestr
+case01,母亲节活动1,3,5,100,5,2,2018-06-26,2018-06-29,订单价格必须满100才能使用减5+勾选自付,1,55844,1
+case02,母亲节活动2,2,5,NULL,5,1,2018-06-26,2018-06-29,无限制+不勾选自付,1,55844,0
+case03,母亲节活动3,2,5,100,5,1,2018-06-26,2018-06-29,订单价格必须满100才能使用减5+不勾选自付,1,55844,0
+case04,母亲节活动4,3,5,NULL,5,2,2018-06-26,2018-06-29,无限制+勾选自付,1,55844,1

@@ -1,0 +1,2 @@
+caseNum,companyId,hospitalId,group,filePath,message,idcardList
+case01,1585,1,测试分组,./csv/account/confirm.xlsx,{},653001199302103461#632122198511049340

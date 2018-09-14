@@ -1,0 +1,3 @@
+caseNum,name,mobile,group,description
+case01,章,12345678901,分组,标准手机号
+case02,孔,eeeeeeee,分组,非标准手机号

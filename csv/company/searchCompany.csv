@@ -1,0 +1,4 @@
+caseNum,hospitalId,type,keyword,description
+case01,1,0,,获取常用单位
+case02,1,0,散客,查询包含“散客”的单位
+case03,1,1,,获取归档单位

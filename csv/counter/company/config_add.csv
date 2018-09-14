@@ -1,0 +1,3 @@
+CASENUM,aheadDays,canOrder,companyId,promptText
+case02,,TRUE,4115,
+case01,3,FALSE,4115,体检日

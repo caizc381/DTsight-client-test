@@ -1,0 +1,2 @@
+CASE01,placeOrderStartTimeStr,placeOrderEndTimeStr,channelIdstr,channelCompanyId,operatorId,settlementViewType
+case01,2018-08-10 00:00:00,2018-08-20 23:59:59,127,4300256,1,1,##体检时间搜索订单结算批次信息

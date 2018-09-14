@@ -1,0 +1,2 @@
+﻿caseNum,id,identity,importWithoutIdcard,isSitePay,mobile,name,username
+case01,,1111,true,true,12345678901,新建客户经理,newManager

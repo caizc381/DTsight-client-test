@@ -1,0 +1,4 @@
+CASENUM,rowCount,currentPage,pageSize,name,mobile,idCard,description
+case01,-1,1,5,沈峰,,,根据姓名搜索
+case02,-1,1,5,,13732298954,,根据手机号搜索
+case03,-1,1,5,,,430702198905197758,根据身份证搜索

@@ -1,0 +1,7 @@
+CASENUM,RefundOrganization,RefundCompany,HospitalId,CompanyId,PaymentTime,Amount,Remark,Certificate
+case01,Channel,ChannelCompany,Hospital,HospitalCompany,2017-12-16 00:00:00,334,autoTest_渠道开票3.34元,NULL
+case02,Channel,ChannelCompany,Hospital,HospitalCompany,2017-12-11 00:00:00,-1,autoTest_自动化渠道账务调整,http://test-i.oss-cn-shanghai.aliyuncs.com/settlement/certificate/69DF205BA59242CCAEFA95E48E62ABE6.txt
+case03,Channel,ChannelCompany,Hospital,COMPANYID,2018-04-16 00:00:00,334,autoTest_渠道开票3.34元,NULL
+case04,Hospital,HospitalCompany,Hospital,HospitalCompany,2017-12-16 00:00:00,334,autoTest_医院开票3.34元,NULL
+case05,Hospital,HospitalCompany,Hospital,HospitalCompany,2017-12-11 00:00:00,-1,autoTest_自动化账务调整,http://test-i.oss-cn-shanghai.aliyuncs.com/settlement/certificate/69DF205BA59242CCAEFA95E48E62ABE6.txt
+case06,Hospital,HospitalCompany,Hospital,HospitalCompany,2018-04-16 00:00:00,334,autoTest_医院开票3.34元,NULL

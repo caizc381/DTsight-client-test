@@ -1,0 +1,2 @@
+caseNum,company,managerId,sequences,groupname,filePath,idCard,name,run,code,message
+case01,SKXC,55788,187653,测试分组22,./csv/account/exportaccountrecords_success.xlsx,43310119750710546,平韩丹,true,200,{}

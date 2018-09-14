@@ -1,0 +1,3 @@
+caseNum,cardId,hospitalId,currentPage,pageSize,rowCount,_site,_siteType,companyId
+case01,,1,1,10,-1,mt,mobile,
+case02,,1,1,10,-1,hzlyy,mobile,

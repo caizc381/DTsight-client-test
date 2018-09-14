@@ -1,0 +1,2 @@
+caseNum,companyid,mealName,meal_type,gender,discount,description,keyword,mealItemList,disable,isOnlyShowMealItem,adjustPrice,lockPrice
+case01,1585,ceshiMealAABBCCDD,3,1,0.9,ceshiMealAABBCCDD套餐描述,keyword1|keyword2|keyword3|keyword4|keyword5,17#18#19,0,FALSE,0,FALSE

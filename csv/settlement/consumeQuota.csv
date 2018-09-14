@@ -1,0 +1,13 @@
+CASENUM,HospitalId,StartTime,EndTime,Scene,Status,PageSize
+case01,HOSPITALID,NULL,NULL,NULL,NULL,20,###消费额度明细（全部）
+case02,HOSPITALID,NULL,NULL,NULL,1,20,###消费额度明细（未确认）
+case03,HOSPITALID,NULL,NULL,NULL,2,20,###消费额度明细（冻结中）
+case04,HOSPITALID,NULL,NULL,NULL,3,20,###消费额度明细（已确认）
+case05,HOSPITALID,NULL,NULL,NULL,4,20,###消费额度明细（已撤销）
+case06,HOSPITALID,NULL,NULL,1,NULL,20,###消费额度明细（医院开票+全部）
+case07,HOSPITALID,NULL,NULL,3,3,20,###消费额度明细（结算盈余+已确认）
+case08,HOSPITALID,NULL,NULL,4,2,20,###消费额度明细（结算支出+冻结中）
+case09,HOSPITALID,2017-12-09,2017-12-20,NULL,NULL,20,###消费额度明细（记录时间涮选）
+case10,HOSPITALID,2017-12-09,NULL,NULL,NULL,20,###消费额度明细（记录时间涮选）
+case11,HOSPITALID,NULL,2017-12-11,NULL,NULL,15,###消费额度明细（记录时间涮选）
+case12,HOSPITALID,NULL,2017-12-17,2,1,15,###消费额度明细（记录时间涮选+账务调整+未确认）

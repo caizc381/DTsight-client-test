@@ -1,0 +1,5 @@
+CASENUM,Name,quantity,price,min_limit_price,receive_limit_num,start_time,end_time,description,organizationId,source,limitTypestr
+case01,父亲节活动1,10,5,100,1,2018-06-26,2018-06-28,订单价格必须满100才能使用减5元+勾选自付,5,0,1
+case02,活动1,5,5,NULL,2,2018-06-29,2018-07-02,无限制+自付部分不勾选,5,0,0
+case03,父亲节活动2,10,5,10,1,2018-06-26,2018-06-30,满10减5+自付部分不勾选,5,0,0
+case04,活动2,5,5,NULL,2,2018-06-29,2018-07-02,无限制优惠券+自付部分勾选,5,0,1

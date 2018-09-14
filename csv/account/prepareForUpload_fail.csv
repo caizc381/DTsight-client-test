@@ -1,0 +1,2 @@
+caseNum,companyId,hospitalId,group,filepath,message,description
+case01,1585,,分组1,./csv/account/prepareForUpload_fail.xlsx,无法识别选择的xls，请确定选择的是客户名单文件,上传一个多sheet的文件

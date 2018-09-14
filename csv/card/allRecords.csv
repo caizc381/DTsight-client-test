@@ -1,0 +1,8 @@
+casenum,companyId,hideZeroCapacityCard,currentPage,pageSize,rowCount,searchKey,useStatus,description
+case08,1259,TRUE,1,10,-1,,,所有发卡记录-按照分组查询
+case02,1259,TRUE,1,10,-1,,0,所有发卡记录-未使用
+case03,1259,TRUE,1,10,-1,,1,所有发卡记录-已使用
+case04,1259,TRUE,1,10,-1,62040119980101327x,,所有发卡记录-已撤销
+case05,1259,TRUE,1,10,-1,小月亮,,所有发卡记录-余额收回
+case06,1259,TRUE,1,10,-1,小月亮,,所有发卡记录-按照姓名查询
+case01,1259,TRUE,1,10,-1,,,所有发卡记录

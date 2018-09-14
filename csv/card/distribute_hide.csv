@@ -1,0 +1,2 @@
+casenum,accountlist,capacity,cardname,mealid,mealprice,parentcardId,private,showCardMealPrice,mealPrice,examNote
+case01,31781,2000,北京航空航天隐价测试卡,14225,2000,33049,true,true,100000,体检须知

@@ -1,0 +1,3 @@
+caseNum,template,mobiles,description
+case01,重新发送发卡短信,12345678901,
+case02,重新发送发卡短信,,手机号为空

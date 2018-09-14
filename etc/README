@@ -1,0 +1,13 @@
+使用指南:
+
+步骤1：根据环境拷贝env.conf.XX 到env.conf（qatest3环境直接拷贝env.conf.qatest3 -> env.conf ,若是开发本地环境拷贝env.conf.local -> env.conf,修改IP和端口）
+
+步骤2：
+执行所有用例：直接对testng.xml运行testng
+执行单个用例，选择测试用例src/test/java/com/tijiantest/testcase/*/*/XXXTest.java，右键Run XXXTest
+
+
+env.conf细节说明：
+mediatorAgentStart配置：设置为true，会执行深对接相关用例，否则跳过用例
+
+

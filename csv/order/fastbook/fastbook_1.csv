@@ -1,0 +1,4 @@
+CaseNum,MealId,MealName,MealPrice,MealGender,ChangeDate,HidePrice,SendMsg,SitePay,VerifyFlag,Group,IdType,IdCard,Gender,Name,CompanyId,ExamItemIdList,CompanyMoney,payOnline,addAccountType,employeeId,mobile,orderReducePrice
+case01,12002,jsy套餐,4500,2,false,false,false,true,true,自动化测试组,1,52242719930108281X,0,钮启,1585,,,false,idCard,,13455556666,100
+case02,12002,jsy套餐,4500,2,false,false,false,true,true,自动化测试组,1,530823199209266575,0,倪付元,1585,,,false,idCard,,,0
+case03,12002,jsy套餐,4500,2,false,false,false,true,true,自动化测试组,1,120102199801016499,0,张咳咳,1585,,,false,idCard,,15655555555,300

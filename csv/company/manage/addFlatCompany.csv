@@ -1,0 +1,3 @@
+caseNum,descption,name,type,descption
+case01,新增P单位,新增P单位,3,正常创建P单位
+case02,新增M单位,新增M单位,4,正常创建M单位

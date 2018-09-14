@@ -1,0 +1,3 @@
+CASENUM,OrganizationName,Type,ExamTel,GroupTel,ServiceTel,TechnicalTel,address,Provice,City,District,addressId,DetailAddress,Longitude,Latitude,CSITEURL,KEYWORDS,BREFIINFO,DETAILINFO,EXAMNOTE,ManageAccount,ManageName,ManageTel,Gender,organizationType
+case02,自动化渠道商,普通体检中介,12345678901,22345678901,32345678901,42345678901,体检中心详细地址,天津市,市辖区,河东区,120102,龙章路西溪花园蒹葭苑13幢611室,30.2899910000,120.0626730000,autotest1,体检平台|健康管理,医院简介绍,医院详细介绍,体检须知,autotest2,自动化测试渠道商,12345678901,1,2
+case01,自动化体检中心,民营品牌,12345678901,22345678901,32345678901,42345678901,体检中心详细地址,天津市,市辖区,河东区,120102,龙章路西溪花园蒹葭苑13幢611室,30.2899910000,120.0626730000,autotest1,专业|体检中心,医院简介绍,医院详细介绍,体检须知,autotest1,自动化测试体检中心,12345678901,1,1

@@ -1,0 +1,2 @@
+case,companyId,hospitalId,managerId,run,code,message
+case01,1259,1,55788,true,200,{}

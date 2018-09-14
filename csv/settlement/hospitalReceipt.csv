@@ -1,0 +1,5 @@
+CaseNum,TotalRevenueAmount,Remark,Type
+CASE01,200,单位账单自动化审批,0
+CASE02,100,医院优惠券账单自动化审批,2
+CASE03,300,医院线上账单自动化审批,3
+CASE04,400,医院线下账单自动化审批,4

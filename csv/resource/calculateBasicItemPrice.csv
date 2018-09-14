@@ -1,0 +1,2 @@
+caseNum,companyid,accountId,mealId,mealName,meal_type,gender,discount,description,keyword,mealItemList,code,message,disable,isShowItemPrice,isShowMealPrice,isOnlyShowMealItem,adjustPrice
+case01,1585,55788,15573,测试套餐,1,0,1,测试AABBCCDD套餐描述,关键词1|关键词2|关键词3|关键词4|关键词5,18,200,{"result":2000},0,false,true,false,20

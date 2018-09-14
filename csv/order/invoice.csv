@@ -1,0 +1,2 @@
+CASENUM,rowCount,currentPage,pageSize,gte,lte,isExport,where,accountRelation.name,title,remark,description
+case01,-1,1,10,,,true,if(this.invoiceApply && this.orderExtInfo.selfMoney>0){ return (this.invoiceApply.approver != this.invoiceApply.proposer && this.invoiceApply.status != 2)},,发票抬头,备注信息,已提交的开票申请

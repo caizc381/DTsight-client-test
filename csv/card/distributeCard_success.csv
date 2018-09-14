@@ -1,0 +1,3 @@
+casenum,accountlist,capacity,cardname,mealid,mealprice,parentcardId,private,showCardMealPrice,examNote
+case01,31781,1000,毛毛distribute测试卡,14225,2000,33049,,,体检须知
+case02,31781,2000,毛毛distribute隐价测试卡,14225,2000,33049,true,true,体检须知

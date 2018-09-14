@@ -1,0 +1,2 @@
+caseNum,companyId,hospitalId,group,filePath,message,idcardList,accountName
+case01,1585,1,测试分组,./csv/account/confirm_mobile_fail.xlsx,{},652923198012225083,松思娴

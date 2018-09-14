@@ -1,0 +1,9 @@
+CASENUM,CompanyId,CompanyPay,CompanyRefund,HospitalId,OnlinePay,OnlineRefund,PlatFormPay,PlatFormRefund,Prepayment,StartTime,EndTime,Status,PageSize
+case01,NULL,-1,-1,HOSPITALID,-1,-1,-1,-1,-1,NULL,NULL,-1,20,###结算批次（全部状态，全部单位）
+case02,NULL,-1,-1,HOSPITALID,-1,-1,-1,-1,-1,NULL,NULL,2,20,###结算批次（待确认状态，全部单位）
+case03,NULL,-1,-1,HOSPITALID,-1,-1,-1,-1,-1,NULL,NULL,4,20,###结算批次（已确认状态，全部单位）
+case04,NULL,-1,-1,HOSPITALID,-1,-1,-1,-1,-1,NULL,NULL,3,20,###结算批次（已撤销状态，全部单位）
+case05,NULL,-1,-1,HOSPITALID,-1,-1,-1,-1,-1,2017-08-09,2017-08-20,-1,20,###结算批次（全部状态，全部单位,时间涮选）
+case06,NULL,-1,-1,HOSPITALID,-1,-1,-1,-1,-1,2017-08-09,NULL,-1,20,###结算批次（全部状态，全部单位,时间涮选）
+case07,NULL,-1,-1,HOSPITALID,-1,-1,-1,-1,-1,NULL,2017-11-11,2,20,###结算批次（已撤销状态，全部单位）
+case08,COMPANYID,-1,-1,HOSPITALID,-1,-1,-1,-1,-1,NULL,NULL,-1,20,###结算批次（全部状态，特定单位）

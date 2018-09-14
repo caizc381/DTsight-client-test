@@ -1,0 +1,3 @@
+casenum,companyId,hideZeroCapacityCard,currentPage,pageSize,rowCount,searchKey,useStatus,expire,description
+case01,1259,TRUE,1,10,-1,,0,,所有发卡记录
+case02,1259,TRUE,1,10,-1,,0,3000-01-01,所有发卡记录

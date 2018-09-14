@@ -1,0 +1,14 @@
+name,priority,template
+改期,1,您的体检日期修改已成功！请$examperson于$examdate #if($begintime != "")$begintime#end#if($endtime != "")(最晚请勿超过$endtime)#end携带本人身份证前往$hospital($hospitaladdress)健康管理中心大厅自助领取体检单。前一天20点后请勿进食进水，客服$serviceTel
+支付成功,1,您的体检预约订单已支付成功，如有疑问请致电（体检中心电话）咨询，如遇到相关技术问题请咨询技术支持电话4000185800
+预约成功,3,您的体检预约已成功！请$examperson于#if($timeremark)$timeremark#elseif($examdate)$examdate$examperiod#end携带本人身份证空腹前往$hospital(@体检地址)健康管理部大厅自助领取体检单。前一天20点后请勿进食进水，客服电话（），如遇到相关技术问题请咨询技术支持电话4000185800
+撤单,3,$examperson您好，您预约$examdate在$hospital的体检订单已取消成功！#if($price != "0.00")已支付的金额将返还至您账户，#end谢谢合作。客服电话（），如遇到相关技术问题请咨询技术支持电话4000185800
+自选日期,1,$examperson，贵单位为您选择的体检套餐需要您自行选择体检日期，请微信关注（体检中心的公众号名称）选择体检日期，登陆用户名为（$username），初始密码111111，客服电话：（），如遇到相关技术问题请咨询技术支持电话4000185800
+密码重置,1,$examperson，贵单位为您选择的体检套餐需要您自行选择体检日期，请微信关注（体检中心的公众号名称）选择体检日期，登陆用户名为（$username），初始密码111111，客服电话：（），如遇到相关技术问题请咨询技术支持电话4000185800
+crm客户经理重置密码,1,您的crm登录密码已被重置为111111，如有疑问，请致电客服：$servicetel
+体检检前通知,3,$examperson 先生/女士，#if($timeremark && $timeremark!='')$timeremark#elseif($examdate)$examdate#end 是您的体检日，#if($timeremark && $timeremark!='')请前一天#elseif($examdate)今天#end 21点之后请勿进食。请您于#if($timeremark)体检日$examperiod #elseif($examdate)明天$examperiod#end 携本人身份证空腹至@体检中心 @体检地址接待处领取体检单。祝您本次体检愉快！咨询电话：（体检中心号码）
+发卡,1,$hospital现通知您即日起#if($deadLine != "")至$deadLine止#end开始网上预约，请关注微信公众号“（替换公众号名称）”；登录账号是$username，初始密码111111，预约步骤：1.登录账户 2.登录后点击立即预约 3.点击套餐 4.立即预约 5.选择日期和体检人 6. 确认预约；页面看到预约成功即可! 如遇到相关技术问题请咨询技术支持电话4000185800
+体检指标异常通知,2
+体检报告通知,3
+体检报告异常建议,2
+关闭订单,3,$bookperson先生/女士，由于您未能及时支付预约的体检订单，订单已被自动关闭。如有需求，请重新预约体检。有疑问请致电客服：400-0185-800

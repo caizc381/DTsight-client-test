@@ -1,0 +1,3 @@
+CASENUM,SN,DiscountAmount,PlatformActurallyPayAmount,Remark
+case01,SN,50024,41219,autotest-账单修改审核更新消费额度
+case02,SN,50024,50024,autotest-账单修改审核更新消费额度=0

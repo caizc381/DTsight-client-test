@@ -1,0 +1,7 @@
+CASENUM,HospitalId,IdCard,OrderStartTime,OrderEndTime,Page,BatchSn
+case01,Hosptail,NULL,NULL,NULL,10,NULL,###不选择条件查询
+case02,Hospital,NULL,NULL,NULL,10,NULL,###体检时间查询
+case03,Hospital,NULL,2017-12-01 00:00:00,2017-12-08 00:00:00,10,NULL,###下单时间查询
+case04,Hosptail,杨鑫平,NULL,NULL,10,NULL,###用户姓名搜索
+case07,Hosptail,NULL,NULL,NULL,30,NULL,###分页
+case08,Hosptail,NULL,NULL,NULL,10,BatchSn,###不选择条件查询，修改结算批次进入包括批次内的收款订单
