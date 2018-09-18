@@ -2,10 +2,10 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="InterfaceTest" verbose="1" preserve-order="true">
     <listeners>
-     <listener class-name="com.tijiantest.listener.CaseResultListener"></listener>
-  	 <listener class-name="com.tijiantest.listener.ExtentTestNGIReporterListener"></listener>
+     <listener class-name="com.dtstack.listener.CaseResultListener"></listener>
+  	 <listener class-name="com.dtstack.listener.ExtentTestNGIReporterListener"></listener>
     </listeners>
-    <test name="trade-client-test">
+    <test name="DTsight-client-test">
         <groups>
           <define name="all">
           <include name="qa"></include>
@@ -16,10 +16,10 @@
           </run>
         </groups>
         <packages>
-            <package name="com.tijiantest.testcase.crm.*"></package>
-            <package name="com.tijiantest.testcase.main.*"></package>
-            <package name="com.tijiantest.testcase.channel.*"></package>
-            <package name="com.tijiantest.testcase.ops.*"></package>
+            <package name="com.dtstack.testcase.crm.*"></package>
+            <package name="com.dtstack.testcase.main.*"></package>
+            <package name="com.dtstack.testcase.channel.*"></package>
+            <package name="com.dtstack.testcase.ops.*"></package>
         </packages>
 
     </test>

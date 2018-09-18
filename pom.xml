@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-        <groupId>ru.yandex.qatools.allure</groupId>
-        <artifactId>allure-examples-parent</artifactId>
-        <version>1.0</version>
-    </parent>
-	<groupId>trade-client-test</groupId>
-	<artifactId>trade-client-test</artifactId>
+		<groupId>ru.yandex.qatools.allure</groupId>
+		<artifactId>allure-examples-parent</artifactId>
+		<version>1.0</version>
+	</parent>
+	<groupId>DTsight-client-test</groupId>
+	<artifactId>DTsight-client-test</artifactId>
 	<version>1.0</version>
 
 
@@ -21,94 +21,6 @@
 		<aspectj.version>1.8.10</aspectj.version>
 	</properties>
 
-	<scm>
-		<connection>scm:git:http://git.mytijian.cn:888/sources/mytijian.git</connection>
-		<url>scm:git:http://git.mytijian.cn:888/sources/mytijian.git</url>
-		<developerConnection>scm:git:http://git.mytijian.cn:888/sources/mytijian.git</developerConnection>
-		<tag>HEAD</tag>
-	</scm>
-
-	<!-- Repositories setting -->
-	<repositories>
-		<repository>
-			<id>central</id>
-			<name>central</name>
-			<url>http://nexus.mytijian.cn:8081/nexus/content/groups/public</url>
-			<releases>
-				<enabled>true</enabled>
-				<updatePolicy>always</updatePolicy>
-				<checksumPolicy>warn</checksumPolicy>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-				<updatePolicy>never</updatePolicy>
-				<checksumPolicy>warn</checksumPolicy>
-			</snapshots>
-			<layout>default</layout>
-		</repository>
-		<repository>
-			<id>public</id>
-			<name>public</name>
-			<url>http://nexus.mytijian.cn:8081/nexus/content/groups/public</url>
-			<releases>
-				<enabled>true</enabled>
-				<updatePolicy>never</updatePolicy>
-				<checksumPolicy>warn</checksumPolicy>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-				<updatePolicy>always</updatePolicy>
-				<checksumPolicy>warn</checksumPolicy>
-			</snapshots>
-			<layout>default</layout>
-		</repository>
-		<repository>
-			<id>nexus</id>
-			<name>public</name>
-			<url>http://nexus.mytijian.cn:8081/nexus/content/repositories/releases</url>
-			<releases>
-				<enabled>true</enabled>
-				<updatePolicy>never</updatePolicy>
-				<checksumPolicy>warn</checksumPolicy>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-				<updatePolicy>always</updatePolicy>
-				<checksumPolicy>warn</checksumPolicy>
-			</snapshots>
-			<layout>default</layout>
-		</repository>
-	</repositories>
-
-	<!-- Plug-in Repositories setting -->
-	<pluginRepositories>
-		<pluginRepository>
-			<id>nexus</id>
-			<name>nexus</name>
-			<url>http://nexus.mytijian.cn:8081/nexus/content/groups/public</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</pluginRepository>
-	</pluginRepositories>
-
-	<!-- This is for let maven knows the release or snapshot address for release 
-		build -->
-	<distributionManagement>
-		<repository>
-			<id>releases</id>
-			<name>NexusRelease Repository</name>
-			<url>http://nexus.mytijian.cn:8081/nexus/content/repositories/releases</url>
-		</repository>
-		<snapshotRepository>
-			<id>snapshots</id>
-			<name>nexus distribution snapshot repository</name>
-			<url>http://nexus.mytijian.cn:8081/nexus/content/repositories/snapshots</url>
-		</snapshotRepository>
-	</distributionManagement>
 	<dependencies>
 		<dependency>
 			<groupId>org.testng</groupId>
@@ -145,7 +57,7 @@
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
-			<version>4.3.4</version>
+			<version>4.5.6</version>
 		</dependency>
 
 		<dependency>
@@ -262,72 +174,28 @@
 			<version>4.1.4.RELEASE</version>
 		</dependency>
 		<dependency>
-    		<groupId>org.freemarker</groupId>
-    		<artifactId>freemarker</artifactId>
-   			 <version>2.3.23</version>
+			<groupId>org.freemarker</groupId>
+			<artifactId>freemarker</artifactId>
+			<version>2.3.23</version>
 		</dependency>
 		<dependency>
 			<groupId>redis.clients</groupId>
 			<artifactId>jedis</artifactId>
 			<version>2.6.2</version>
 		</dependency>
-        <!-- https://mvnrepository.com/artifact/org.assertj/assertj-core -->
+		<!-- https://mvnrepository.com/artifact/org.assertj/assertj-core -->
 		<dependency>
-		    <groupId>org.assertj</groupId>
-		    <artifactId>assertj-core</artifactId>
-		    <version>3.8.0</version>
-		    <scope>test</scope>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+			<version>3.8.0</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
-		    <groupId>com.aventstack</groupId>
-		    <artifactId>extentreports</artifactId>
-		    <version>3.1.1</version>
+			<groupId>com.aventstack</groupId>
+			<artifactId>extentreports</artifactId>
+			<version>3.1.1</version>
 		</dependency>
 	</dependencies>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>${version.maven.surefire}</version>
-				<executions>
-					<execution>
-						<phase>test</phase>
-					</execution>
-				</executions>
-				<configuration>
-					<encoding>UTF-8</encoding>
-					<inputEncoding>UTF-8</inputEncoding>
-					<outputEncoding>UTF-8</outputEncoding>
-					<argLine>-Xms256m -Xmx1024m -XX:MaxPermSize=128m -ea
-						-Dfile.encoding=UTF-8
-						-javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
-					</argLine>
-					<suiteXmlFiles>
-						<!-- <file>${basedir}/test-xml/crm/card/cardrecord.xml</file> <file>${basedir}/test-xml/crm/card/cardlist.xml</file> -->
-						<suiteXmlFile>${basedir}/testng.xml</suiteXmlFile>
-					</suiteXmlFiles>
-				</configuration>
-				<dependencies>
-                    <dependency>
-                        <groupId>org.aspectj</groupId>
-                        <artifactId>aspectjweaver</artifactId>
-                        <version>${aspectj.version}</version>
-                    </dependency>
-                </dependencies>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>${version.maven.compiler}</version>
-				<configuration>
-					<source>${java.version}</source>
-					<target>${java.version}</target>
-					<!-- <encoding>${project.build.sourceEncoding}</encoding> -->
-					<encoding>UTF-8</encoding>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+
 </project>
