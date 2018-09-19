@@ -3,8 +3,6 @@ package com.dtstack.testcase.ide;
 import com.dtstack.base.*;
 import com.dtstack.base.dbcheck.TenantChecker;
 import com.dtstack.base.dbcheck.UserChecker;
-import com.dtstack.model.ide.Tenant;
-import com.dtstack.model.ide.User;
 import org.apache.http.Header;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;

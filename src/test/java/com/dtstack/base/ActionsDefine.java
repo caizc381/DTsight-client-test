@@ -16,6 +16,7 @@ public interface ActionsDefine {
 
     //IDE
     public final static String IDE_GetAllProjects="/common/project/getAllProjects";
+    public final static String IDE_GetProjectByProjectId="/common/project/getProjectByProjectId";
 
     //UIC
     public final static String UIC_GetFullTenants="/account/user/get-full-tenants";//获取所有租户信息

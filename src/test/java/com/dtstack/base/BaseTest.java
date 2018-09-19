@@ -9,9 +9,8 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.CountDownLatch;
 
-import com.dtstack.base.dbcheck.UserChecker;
-import com.dtstack.model.ide.Tenant;
-import com.dtstack.model.ide.User;
+import com.dtstack.model.domain.ide.Tenant;
+import com.dtstack.model.domain.ide.User;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
 

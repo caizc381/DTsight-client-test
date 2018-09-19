@@ -1,7 +1,7 @@
 package com.dtstack.base.dbcheck;
 
 import com.dtstack.base.BaseTest;
-import com.dtstack.model.ide.User;
+import com.dtstack.model.domain.ide.User;
 import com.dtstack.util.db.DBMapper;
 import com.dtstack.util.db.SqlException;
 
