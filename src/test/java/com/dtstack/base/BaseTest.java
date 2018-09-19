@@ -9,6 +9,9 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.CountDownLatch;
 
+import com.dtstack.base.dbcheck.UserChecker;
+import com.dtstack.model.ide.Tenant;
+import com.dtstack.model.ide.User;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
 
@@ -60,6 +63,10 @@ public class BaseTest implements ConfDefine,ActionsDefine{
 	public static String defDtuicUsername;
 	public static String defDtuicPasswd;
 	public final static ConfParser baseconf = new ConfParser("./csv/base/base.conf");
+	public static String defDtuicUserId ;
+	public static User defDtuicUser;
+	public static String defTenantId;
+	public static Tenant defTenant;
 
 	
 	static {
@@ -98,6 +105,8 @@ public class BaseTest implements ConfDefine,ActionsDefine{
 		
 		defDtuicUsername = testConf.getValue(ConfDefine.DTUICINFO, ConfDefine.USERNAME);
 		defDtuicPasswd = testConf.getValue(ConfDefine.DTUICINFO, ConfDefine.PASSWORD);
+		defDtuicUserId = testConf.getValue(ConfDefine.DTUICINFO,ConfDefine.DTUICUSERID);
+		defTenantId = testConf.getValue(ConfDefine.DTUICINFO,ConfDefine.TENANTID);
 	}
 
 	/**

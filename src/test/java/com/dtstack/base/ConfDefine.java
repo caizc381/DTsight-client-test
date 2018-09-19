@@ -13,7 +13,7 @@ public interface ConfDefine {
 	 * env config
 	 */
 	public final static String ENV_CONFIG = "./etc/env.conf";
-	// define sections
+	// dtuic-info
 	public final static String PUBLIC = "public";
 	public final static String DTUICSITE="dtuic-site";
 	public final static String IDESITE = "ide-site";
@@ -38,15 +38,20 @@ public interface ConfDefine {
 
 
 
+
 	/*
 	 * test config
 	 */
 	public final static String TEST_CONFIG = "./etc/test.conf";
 
-	// define sections
+	// dtuic-info
 	public final static String DTUICINFO="dtuic-info";
 	public final static String CHECKDB = "check_db";
 	public final static String CHECKMONGO = "check_mongo";
 	public final static String USERNAME = "username";
 	public final static String PASSWORD = "password";
+	public final static String DTUICUSERID="dtuicuserid";
+	public final static String TENANTID="tenantid";
+
+
 }

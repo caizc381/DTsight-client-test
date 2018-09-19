@@ -50,662 +50,650 @@ import org.testng.Assert;
 import com.alibaba.fastjson.JSON;
 
 /**
- *
  * @author huifang
- *
  */
-public class MyHttpClient
-{
-	/**
-	 * 日志对象。
-	 */
+public class MyHttpClient {
+    /**
+     * 日志对象。
+     */
 
-	/**
-	 * 默认HTTP请求客户端对象。
-	 */
-	private HttpClient _httpclient;
-			//private CloseableHttpClient _httpclient;
+    /**
+     * 默认HTTP请求客户端对象。
+     */
+    private HttpClient _httpclient;
+    //private CloseableHttpClient _httpclient;
 
-	protected final static Logger log = Logger.getLogger(MyHttpClient.class);
-	/**
-	 * 用户自定义消息头。
-	 */
-	private Map<String, String> _headers;
-	private CookieStore  cookieStore = new BasicCookieStore();
-
+    protected final static Logger log = Logger.getLogger(MyHttpClient.class);
+    /**
+     * 用户自定义消息头。
+     */
+    private Map<String, String> _headers;
+    private CookieStore cookieStore = new BasicCookieStore();
 
 
-	private  String token;
+    private String token;
 
-	private  String cookie;
+    private String cookie;
 
-	private String xAutoToken;
+    private String xAutoToken;
 
-	/**
-	 * 使用默认客户端对象。
-	 */
-	public MyHttpClient()
-	{
+    /**
+     * 使用默认客户端对象。
+     */
+    public MyHttpClient() {
 
-		// 1. 创建HttpClient对象。
-		RequestConfig defaultConnectionConfig = RequestConfig.custom()
-				.setConnectTimeout(BaseTest.connTimeout)
-				.setSocketTimeout(BaseTest.socketTimeout)
+        // 1. 创建HttpClient对象。
+        RequestConfig defaultConnectionConfig = RequestConfig.custom()
+                .setConnectTimeout(BaseTest.connTimeout)
+                .setSocketTimeout(BaseTest.socketTimeout)
 //                .setConnectionRequestTimeout(BaseTest.socketTimeout)
-				.setCookieSpec(CookieSpecs.STANDARD)
-				.build();
-		_httpclient = HttpClientBuilder.create().setRedirectStrategy(new LaxRedirectStrategy())
-				.setMaxConnPerRoute(BaseTest.maxConnPerRoute)
-				.setMaxConnTotal(BaseTest.maxConnTotal)
-				.setDefaultRequestConfig(defaultConnectionConfig)
-				.build();
-		log.info("create _httpclient ...");
-	}
-	private HttpClientContext getHttpClientContext()
-	{
-		HttpClientContext httpContext = HttpClientContext.create();
-		Registry<CookieSpecProvider> registry = RegistryBuilder
-				.<CookieSpecProvider> create()
-				.register(CookieSpecs.BEST_MATCH, new BestMatchSpecFactory())
-				.register(CookieSpecs.BROWSER_COMPATIBILITY,
-						new BrowserCompatSpecFactory()).build();
-		httpContext.setCookieSpecRegistry(registry);
-		httpContext.setCookieStore(cookieStore);
-		return httpContext;
-	}
-	/**
-	 * 调用者指定客户端对象。
-	 */
-	public MyHttpClient(Map<String, String> headers)
-	{
-		// 1. 创建HttpClient对象。
-		RequestConfig defaultConnectionConfig = RequestConfig.custom()
-				.setConnectTimeout(10000)
-				.setSocketTimeout(2000)
-				.build();
-		_httpclient = HttpClientBuilder.create().setRedirectStrategy(new LaxRedirectStrategy())
-				.setMaxConnPerRoute(5)
-				.setMaxConnTotal(20)
-				.setDefaultRequestConfig(defaultConnectionConfig)
-				.build();
-		this._headers = headers;
-		log.info("create _httpclient ...");
-	}
-
-	public synchronized HttpResult post(String uri, List<NameValuePair>params){
-		return post(Flag.DTUIC,uri,params);
-	}
-
-	/**
-	 * HTTP POST请求。
-	 * @return
-	 * @throws InterruptedException
-	 */
-	public synchronized HttpResult post(Flag flag,String uri, List<NameValuePair>params)
-	{
-		String url = "";
-		if(flag.equals(Flag.DTUIC))
-			url = BaseTest.dtuicurl +  uri;
-
-		// 2. 创建请求方法的实例，并定请求URL，添加请求参数。
-		HttpPost post = postForm(url, params);
-
-		setHttpHeaderCookie(post);
-
-		log.info("create httppost : " + url);
-
-		HttpResult response =  invoke(post);
-
-		setHttpResonseCookie(response);
-		checkResponseException(response,uri);
-		return response;
-	}
-
-
-	public synchronized HttpResult post(String uri, Map<String, String> params)
-	{
-		return post(Flag.DTUIC,uri,params);
-	}
-	/**
-	 * HTTP POST请求。
-	 * @return
-	 * @throws InterruptedException
-	 */
-	public synchronized HttpResult post(Flag flag,String uri, Map<String, String> params)
-	{
-		String url = "";
-		if(flag.equals(Flag.DTUIC))
-			url = BaseTest.dtuicurl + uri;
-		// 2. 创建请求方法的实例，并指定请求URL，添加请求参数。
-		//HttpPost post = postForm(url, params,ActionsDefine.cookieValue);
-
-		HttpPost post = postForm(url, params);
-		setHttpHeaderCookie(post);
-
-		log.info("create httppost : " + url);
-
-		HttpResult response =  invoke(post);
-
-		setHttpResonseCookie(response);
-
-		checkResponseException(response,uri);
-		return response;
-	}
-
-	private void setHttpHeaderCookie(HttpRequestBase post) {
-
-		post.addHeader("Cookie",getCookie());
-	}
-
-	private void setHttpResonseCookie(HttpResult response) {
-		Map<String,String> headers = response.getHeader();
-		String headerCookies = "";
-		for (Map.Entry<String, String> entry : headers.entrySet()) {
-			System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
-			if (entry.getKey().equals("Set-Cookie")) {
-				headerCookies += entry.getValue();
-			}
-		}
-		setCookie(headerCookies);
-
-	}
-
-	public synchronized HttpResult post(String uri,String jsonObj)
-	{
-		return post(Flag.DTUIC,uri,jsonObj);
-	}
-
-	public synchronized HttpResult post(Flag flag,String uri,String jsonObj,String cookieKeyValue)
-	{
-		// 2. 创建请求方法的实例，并指定请求URL，添加请求参数。
-		String url = "";
-		if(flag.equals(Flag.DTUIC))
-			url = BaseTest.dtuicurl + uri;
-
-		HttpPost post = new HttpPost(url);
-		post.addHeader("Authorization","your token");//认证token
-		post.addHeader("Content-type","application/json; charset=utf-8");
-		post.addHeader("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36");
-		post.setHeader("Accept", "application/json");
-		post.addHeader(new BasicHeader("Cookie",cookieKeyValue));
-
-	setHttpHeaderCookie(post);
-
-		log.info("jsonObj:"+jsonObj);
-		post.setEntity(new StringEntity(jsonObj,Charset.forName("UTF-8")));
-
-		log.info("create httppost : " + url);
-
-		//请求
-		HttpResult response = invoke(post);
-
-		setHttpResonseCookie(response);
-
-		checkResponseException(response,uri);
-		return response;
-
-	}
-
-
-	/**
-	 * 适用于接口带token的，默认false
-	 */
-	public synchronized HttpResult post(Flag flag,String uri,String jsonObj)
-	{
-		// 2. 创建请求方法的实例，并指定请求URL，添加请求参数。
-		String url = "";
-		if(flag.equals(Flag.DTUIC))
-			url = BaseTest.dtuicurl + uri;
-		if (flag.equals(Flag.IDE)){
-			url = BaseTest.ideurl+uri;
-		}
-		HttpPost post = new HttpPost(url);
-		post.addHeader("Content-type","application/json; charset=utf-8");
-		post.setHeader("Accept", "application/json");
-		post.addHeader("Cookie",ActionsDefine.cookieValue);
-
-		setHttpHeaderCookie(post);
-		log.info("jsonObj:"+jsonObj);
-		post.setEntity(new StringEntity(jsonObj,Charset.forName("UTF-8")));
-
-		log.info("create httppost : " + url);
-
-		//请求
-		HttpResult response = invoke(post);
-
-		setHttpResonseCookie(response);
-
-		checkResponseException(response,uri);
-		return response;
-
-	}
-
-	public synchronized HttpResult post(String uri,Map<String,Object> params,String jsonObj)
-	{
-		return post(Flag.DTUIC,uri,params,jsonObj);
-	}
-	/**
-	 * 适用于接口带token的，默认false
-	 */
-	public synchronized HttpResult post(Flag flag,String uri,Map<String,Object> params,String jsonObj)
-	{
-		// 2. 创建请求方法的实例，并指定请求URL，添加请求参数。
-		String url = "";
-		if(flag.equals(Flag.DTUIC))
-			url = BaseTest.dtuicurl + uri+"?" ;
-
-		for (String key : params.keySet()) {
-			url+=key+"="+params.get(key)+"&";
-		}
-		url=url.substring(0,url.length()-1);
-
-		HttpPost post = new HttpPost(url);
-		post.addHeader("Content-type","application/json; charset=utf-8");
-		post.setHeader("Accept", "application/json");
-
-		setHttpHeaderCookie(post);
-
-		log.info("jsonObj:"+jsonObj);
-		post.setEntity(new StringEntity(jsonObj,Charset.forName("UTF-8")));
-
-		log.info("create httppost : " + url);
-
-		//请求
-		HttpResult response = invoke(post);
-
-		setHttpResonseCookie(response);
-
-		checkResponseException(response,uri);
-		return response;
-
-	}
-
-	public synchronized HttpResult post(String uri,List<NameValuePair>params,String jsonObj)
-	{
-		return post(Flag.DTUIC,uri,params,jsonObj);
-	}
-	/**
-	 * 适用于接口带token的，默认false
-	 */
-	public synchronized HttpResult post(Flag flag,String uri,List<NameValuePair>params,String jsonObj)
-	{
-		// 2. 创建请求方法的实例，并指定请求URL，添加请求参数。
-		String url = "";
-		if(flag.equals(Flag.DTUIC))
-			url = BaseTest.dtuicurl +  uri+"?" ;
-		for (int i=0;i<params.size();i++) {
-			url+=params.get(i).getName()+"="+params.get(i).getValue()+"&";
-		}
-		url=url.substring(0,url.length()-1);
-
-		HttpPost post = new HttpPost(url);
-		post.addHeader("Content-type","application/json; charset=utf-8");
-		post.setHeader("Accept", "application/json");
-
-		setHttpHeaderCookie(post);
-
-		log.info("jsonObj:"+jsonObj);
-		post.setEntity(new StringEntity(jsonObj,Charset.forName("UTF-8")));
-
-		log.info("create httppost : " + url);
-
-		//请求
-		HttpResult response = invoke(post);
-
-		setHttpResonseCookie(response);
-
-		checkResponseException(response,uri);
-		return response;
-
-	}
-	/**
-	 * post请求读取InputStream 用于文件下载等
-	 * @param flag
-	 * @param uri
-	 * @param params
-	 * @return
-	 */
-	public synchronized HttpResult postForInputStream(Flag flag,String uri,List<NameValuePair>params)
-	{
-		String url = "";
-		if(flag.equals(Flag.DTUIC))
-			url = BaseTest.dtuicurl + uri;
-
-		// 2. 创建请求方法的实例，并定请求URL，添加请求参数。
-		HttpPost post = postForm(url, params);
-
-		setHttpHeaderCookie(post);
-
-		log.info("create httppost : " + url);
-
-		HttpResult response =  invoke(post,true);
-
-		setHttpResonseCookie(response);
-
-		checkResponseException(response,uri);
-		return response;
-	}
-	public HttpResult get(String uri, List<NameValuePair>params){
-		return get(Flag.DTUIC,uri,params);
-	}
-
-	/**
-	 * get带参数
-	 * @param uri
-	 * @param params
-	 * @return
-	 */
-	public HttpResult get(Flag flag,String uri, List<NameValuePair>params){
-		String url = "";
-		if(flag.equals(Flag.DTUIC))
-			url = BaseTest.dtuicurl + uri + "?" + URLEncodedUtils.format(params, Consts.UTF_8);
-
-		log.info("create httpget : " + url);
-
-		HttpGet get = new HttpGet(url);
-		setHttpHeaderCookie(get);
-
-		HttpResult response =  invoke(get);
-
-		setHttpResonseCookie(response);
-		checkResponseException(response,uri);
-		return response;
-
-	}
-
-	public HttpResult get(String uri,Map<String,Object> params)
-	{   return get(Flag.DTUIC,uri,params);
-
-	}
-	/**
-	 * HTTP GET请求。
-	 * @return
-	 */
-	public HttpResult get(Flag flag,String uri,Map<String,Object> params)
-	{
-		String url = "";
-		if(flag.equals(Flag.DTUIC))
-			url = BaseTest.dtuicurl + uri+"?" ;
-		for (String key : params.keySet()) {
-			url+=key+"="+params.get(key)+"&";
-		}
-		url=url.substring(0,url.length()-1);
-		HttpGet get = new HttpGet(url);
-		log.info("create httpget : " + url);
-
-		return invoke(get);
-	}
-
-	public HttpResult get(String uri,List<NameValuePair>params ,String ... pathParams){
-		return get(Flag.DTUIC,uri,params,pathParams);
-	}
-	/**
-	 *
-	 * @param flag
-	 * @param uri
-	 * @param params
-	 * @param pathParams
-	 * @return
-	 */
-	public HttpResult get(Flag flag,String uri,List<NameValuePair>params ,String ... pathParams){
-		String url = "";
-		if(flag.equals(Flag.DTUIC))
-			url = BaseTest.dtuicurl + uri ;
-		for(String p : pathParams)
-			url += "/" + p;
-
-		url +=  "?" + URLEncodedUtils.format(params, Consts.UTF_8);
-
-		HttpGet get = new HttpGet(url);
-		setHttpHeaderCookie(get);
-		log.info("create httpget : " + url);
-
-		HttpResult response =  invoke(get);
-
-		setHttpResonseCookie(response);
-		checkResponseException(response,uri);
-		return  response;
-	}
-
-
-	public HttpResult get(String uri,String ... pathParams){
-		return get(Flag.DTUIC,uri,pathParams);
-	}
-
-
-	/**
-	 * 传入多个参数
-	 * @param uri
-	 * @param pathParams
-	 * @return
-	 */
-	public HttpResult get(Flag flag,String uri,String ... pathParams){
-		String url = "";
-		if(flag.equals(Flag.DTUIC))
-			url = BaseTest.dtuicurl + uri ;
-		for(String p : pathParams)
-			url += "/" + p;
-
-		HttpGet get = new HttpGet(url);
-		log.info("create httpget : " + url);
-
-		return invoke(get);
-	}
-
-
-	public HttpResult get(String uri){
-		return get(Flag.DTUIC,uri);
-	}
-
-	public HttpResult get(Flag flag,String uri)
-	{   String url = "";
-		if(flag.equals(Flag.DTUIC))
-			url = BaseTest.dtuicurl + uri ;
-
-		HttpGet get = new HttpGet(url);
-
-		log.info("create httpget : " + url);
-		setHttpHeaderCookie(get);
-
-		HttpResult response =  invoke(get);
-		setHttpResonseCookie(response);
-		checkResponseException(response,uri);
-		return response;
-
-	}
-
-	public HttpResult gets(String uri,Map<Integer,Integer>params){
-		return gets(Flag.DTUIC,uri,params);
-	}
-
-	public HttpResult gets(Flag flag,String uri,Map<Integer,Integer> params){
-		String url = "";
-		if(flag.equals(Flag.DTUIC))
-			url = BaseTest.dtuicurl + uri ;
-		for (Integer key : params.keySet()) {
-			url+= params.get(key)+"/";
-		}
-		url=url.substring(0,url.length()-1);
-		HttpGet get = new HttpGet(url);
-		log.info("create httpget : " + url);
-
-		return invoke(get);
-	}
-
-	public HttpResult options(String uri,Map<String,Object>params){
-		return options(Flag.DTUIC,uri,params);
-	}
-
-	/**
-	 * HTTP OPTIONS请求。
-	 * @return
-	 */
-	public HttpResult options(Flag flag,String uri,Map<String,Object>params){
-		String url = "";
-		if(flag.equals(Flag.DTUIC))
-			url = BaseTest.dtuicurl + uri+"?" ;
-		for (String key : params.keySet()) {
-			url+=key+"="+params.get(key)+"&";
-		}
-		url=url.substring(0,url.length()-1);
-
-		HttpOptions options = new HttpOptions(url);
-		log.info("create httpoptions : " + url);
-
-		return invoke(options);
-	}
-
-	public synchronized HttpResult upload(String uri,Map<String,Object> params,File file) throws ClientProtocolException, IOException{
-		return upload(Flag.DTUIC,uri,params,file);
-	}
-
-	/**
-	 * 适用于接口带token的，默认false
-	 */
-	public synchronized HttpResult upload(Flag flag,String uri,Map<String,Object> params,File file) throws ClientProtocolException, IOException {
-		String url = "";
-		if(flag.equals(Flag.DTUIC))
-			url = BaseTest.dtuicurl +  uri+"?" ;
-		if(params!= null){
-			for (String key : params.keySet()) {
-				url+=key+"="+params.get(key)+"&";
-			}
-		}
-
-		url=url.substring(0,url.length()-1);
-		MultipartEntityBuilder entity= MultipartEntityBuilder.create().addBinaryBody("file", file,ContentType.create("application/octet-stream"),file.getName());
-		HttpPost httpPost =new HttpPost(url);
-		log.info("create httpupload : " + url);
-		httpPost.setEntity(entity.build());
-		HttpResult response =  invoke(httpPost);
-		checkResponseException(response,uri);
-		return response;
-	}
-
-	public HttpResult delete(String uri,String param){
-		return delete(Flag.DTUIC,uri,param);
-	}
-	public HttpResult delete(Flag flag ,String uri,String param){
-
-		String url = "";
-		if(flag.equals(Flag.DTUIC))
-			url = BaseTest.dtuicurl + uri +"/" + param;
-		HttpDelete delete = new HttpDelete(url);
-		log.info("create httpdelete : " + url);
-
-		return invoke(delete);
-	}
-
-	public HttpResult delete(String uri,Map<String,Object> params){
-		return delete(Flag.DTUIC,uri,params);
-	}
-	public HttpResult delete(Flag flag,String uri,Map<String,Object> params){
-		String url = "";
-		if(flag.equals(Flag.DTUIC))
-			url = BaseTest.dtuicurl + uri +"?" ;
-		for (String key : params.keySet()) {
-			url+=key+"="+params.get(key)+"&";
-		}
-		url=url.substring(0,url.length()-1);
-
-		HttpDelete delete = new HttpDelete(url);
-		log.info("create httpdelete : " + url);
-
-		return invoke(delete);
-	}
-
-
-
-	private HttpResult invoke(HttpRequestBase request ,Boolean isGetInputStream)  {
-		if(isGetInputStream){
-			if (this._headers != null)
-			{
-				//
-				addHeaders(request);
-			}
-
-			try
-			{
-				// 3. 调用HttpClient对象的execute(HttpUriRequest request)发送请求，返回一个HttpResponse。
-				HttpClientContext httpClientContext = getHttpClientContext();
-				HttpResponse  response = _httpclient.execute(request,httpClientContext);
-
-				int code = response.getStatusLine().getStatusCode();
-				InputStream ism = response.getEntity().getContent();
-				Map<String, String> headerMap = new HashMap<String, String>();
-				Header headers[]=response.getAllHeaders();
-				if(headers !=null){
-					for(Header header:headers){
-						headerMap.put(header.getName(), header.getValue());
-					}
-				}
-				return new HttpResult(code, null, headerMap,ism);
-				// log.info("execute http success... ; body = " + EntityUtils.toString(response.getEntity()));
-
-			}
-			catch (Exception e)
-			{
-				e.printStackTrace();
-				log.info("execute http exception...");
-				throw new RuntimeException(e);
-			}
-
-		}else
-			return this.invoke(request);
-	}
-
-	/**
-	 * 发送请求，处理响应。
-	 * @param request
-	 * @return
-	 * http://stackoverflow.com/questions/19165420/socket-closed-exception-when-trying-to-read-httpresponse
-	 */
-	private HttpResult invoke(HttpRequestBase request)
-	{
-		if (this._headers != null)
-		{
-			//
-			addHeaders(request);
+                .setCookieSpec(CookieSpecs.STANDARD)
+                .build();
+        _httpclient = HttpClientBuilder.create().setRedirectStrategy(new LaxRedirectStrategy())
+                .setMaxConnPerRoute(BaseTest.maxConnPerRoute)
+                .setMaxConnTotal(BaseTest.maxConnTotal)
+                .setDefaultRequestConfig(defaultConnectionConfig)
+                .build();
+        log.info("create _httpclient ...");
+    }
+
+    private HttpClientContext getHttpClientContext() {
+        HttpClientContext httpContext = HttpClientContext.create();
+        Registry<CookieSpecProvider> registry = RegistryBuilder
+                .<CookieSpecProvider>create()
+                .register(CookieSpecs.BEST_MATCH, new BestMatchSpecFactory())
+                .register(CookieSpecs.BROWSER_COMPATIBILITY,
+                        new BrowserCompatSpecFactory()).build();
+        httpContext.setCookieSpecRegistry(registry);
+        httpContext.setCookieStore(cookieStore);
+        return httpContext;
+    }
+
+    /**
+     * 调用者指定客户端对象。
+     */
+    public MyHttpClient(Map<String, String> headers) {
+        // 1. 创建HttpClient对象。
+        RequestConfig defaultConnectionConfig = RequestConfig.custom()
+                .setConnectTimeout(10000)
+                .setSocketTimeout(2000)
+                .build();
+        _httpclient = HttpClientBuilder.create().setRedirectStrategy(new LaxRedirectStrategy())
+                .setMaxConnPerRoute(5)
+                .setMaxConnTotal(20)
+                .setDefaultRequestConfig(defaultConnectionConfig)
+                .build();
+        this._headers = headers;
+        log.info("create _httpclient ...");
+    }
+
+    public synchronized HttpResult post(String uri, List<NameValuePair> params) {
+        return post(Flag.DTUIC, uri, params);
+    }
+
+    /**
+     * HTTP POST请求。
+     *
+     * @return
+     * @throws InterruptedException
+     */
+    public synchronized HttpResult post(Flag flag, String uri, List<NameValuePair> params) {
+        String url = "";
+        if (flag.equals(Flag.DTUIC))
+            url = BaseTest.dtuicurl + uri;
+
+        // 2. 创建请求方法的实例，并定请求URL，添加请求参数。
+        HttpPost post = postForm(url, params);
+
+        setHttpHeaderCookie(post);
+
+        log.info("create httppost : " + url);
+
+        HttpResult response = invoke(post);
+
+        setHttpResonseCookie(response);
+        checkResponseException(response, uri);
+        return response;
+    }
+
+
+    public synchronized HttpResult post(String uri, Map<String, String> params) {
+        return post(Flag.DTUIC, uri, params);
+    }
+
+    /**
+     * HTTP POST请求。
+     *
+     * @return
+     * @throws InterruptedException
+     */
+    public synchronized HttpResult post(Flag flag, String uri, Map<String, String> params) {
+        String url = "";
+        if (flag.equals(Flag.DTUIC))
+            url = BaseTest.dtuicurl + uri;
+        // 2. 创建请求方法的实例，并指定请求URL，添加请求参数。
+        //HttpPost post = postForm(url, params,ActionsDefine.cookieValue);
+
+        HttpPost post = postForm(url, params);
+        setHttpHeaderCookie(post);
+
+        log.info("create httppost : " + url);
+
+        HttpResult response = invoke(post);
+
+        setHttpResonseCookie(response);
+
+        checkResponseException(response, uri);
+        return response;
+    }
+
+    private void setHttpHeaderCookie(HttpRequestBase post) {
+
+        post.addHeader("Cookie", getCookie());
+    }
+
+    private void setHttpResonseCookie(HttpResult response) {
+        Map<String, String> headers = response.getHeader();
+        String headerCookies = "";
+        for (Map.Entry<String, String> entry : headers.entrySet()) {
+            System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
+            if (entry.getKey().equals("Set-Cookie")) {
+                headerCookies += entry.getValue();
+            }
+        }
+        setCookie(headerCookies);
+
+    }
+
+    public synchronized HttpResult post(String uri, String jsonObj) {
+        return post(Flag.DTUIC, uri, jsonObj);
+    }
+
+    public synchronized HttpResult post(Flag flag, String uri, String jsonObj, String cookieKeyValue) {
+        // 2. 创建请求方法的实例，并指定请求URL，添加请求参数。
+        String url = "";
+        if (flag.equals(Flag.DTUIC))
+            url = BaseTest.dtuicurl + uri;
+
+        HttpPost post = new HttpPost(url);
+        post.addHeader("Authorization", "your token");//认证token
+        post.addHeader("Content-type", "application/json; charset=utf-8");
+        post.addHeader("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36");
+        post.setHeader("Accept", "application/json");
+        post.addHeader(new BasicHeader("Cookie", cookieKeyValue));
+
+        setHttpHeaderCookie(post);
+
+        log.info("jsonObj:" + jsonObj);
+        post.setEntity(new StringEntity(jsonObj, Charset.forName("UTF-8")));
+
+        log.info("create httppost : " + url);
+
+        //请求
+        HttpResult response = invoke(post);
+
+        setHttpResonseCookie(response);
+
+        checkResponseException(response, uri);
+        return response;
+
+    }
+
+
+    /**
+     * 适用于接口带token的，默认false
+     */
+    public synchronized HttpResult post(Flag flag, String uri, String jsonObj) {
+        // 2. 创建请求方法的实例，并指定请求URL，添加请求参数。
+        String url = "";
+        if (flag.equals(Flag.DTUIC))
+            url = BaseTest.dtuicurl + uri;
+        if (flag.equals(Flag.IDE)) {
+            url = BaseTest.ideurl + uri;
+        }
+        HttpPost post = new HttpPost(url);
+        post.addHeader("Content-type", "application/json; charset=utf-8");
+        post.setHeader("Accept", "application/json");
+        post.addHeader("Cookie", ActionsDefine.cookieValue);
+
+        setHttpHeaderCookie(post);
+        log.info("jsonObj:" + jsonObj);
+        post.setEntity(new StringEntity(jsonObj, Charset.forName("UTF-8")));
+
+        log.info("create httppost : " + url);
+
+        //请求
+        HttpResult response = invoke(post);
+
+        setHttpResonseCookie(response);
+
+        checkResponseException(response, uri);
+        return response;
+
+    }
+
+    public synchronized HttpResult post(String uri, Map<String, Object> params, String jsonObj) {
+        return post(Flag.DTUIC, uri, params, jsonObj);
+    }
+
+    /**
+     * 适用于接口带token的，默认false
+     */
+    public synchronized HttpResult post(Flag flag, String uri, Map<String, Object> params, String jsonObj) {
+        // 2. 创建请求方法的实例，并指定请求URL，添加请求参数。
+        String url = "";
+        if (flag.equals(Flag.DTUIC))
+            url = BaseTest.dtuicurl + uri + "?";
+
+        for (String key : params.keySet()) {
+            url += key + "=" + params.get(key) + "&";
+        }
+        url = url.substring(0, url.length() - 1);
+
+        HttpPost post = new HttpPost(url);
+        post.addHeader("Content-type", "application/json; charset=utf-8");
+        post.setHeader("Accept", "application/json");
+
+        setHttpHeaderCookie(post);
+
+        log.info("jsonObj:" + jsonObj);
+        post.setEntity(new StringEntity(jsonObj, Charset.forName("UTF-8")));
+
+        log.info("create httppost : " + url);
+
+        //请求
+        HttpResult response = invoke(post);
+
+        setHttpResonseCookie(response);
+
+        checkResponseException(response, uri);
+        return response;
+
+    }
+
+    public synchronized HttpResult post(String uri, List<NameValuePair> params, String jsonObj) {
+        return post(Flag.DTUIC, uri, params, jsonObj);
+    }
+
+    /**
+     * 适用于接口带token的，默认false
+     */
+    public synchronized HttpResult post(Flag flag, String uri, List<NameValuePair> params, String jsonObj) {
+        // 2. 创建请求方法的实例，并指定请求URL，添加请求参数。
+        String url = "";
+        if (flag.equals(Flag.DTUIC))
+            url = BaseTest.dtuicurl + uri + "?";
+        for (int i = 0; i < params.size(); i++) {
+            url += params.get(i).getName() + "=" + params.get(i).getValue() + "&";
+        }
+        url = url.substring(0, url.length() - 1);
+
+        HttpPost post = new HttpPost(url);
+        post.addHeader("Content-type", "application/json; charset=utf-8");
+        post.setHeader("Accept", "application/json");
+
+        setHttpHeaderCookie(post);
+
+        log.info("jsonObj:" + jsonObj);
+        post.setEntity(new StringEntity(jsonObj, Charset.forName("UTF-8")));
+
+        log.info("create httppost : " + url);
+
+        //请求
+        HttpResult response = invoke(post);
+
+        setHttpResonseCookie(response);
+
+        checkResponseException(response, uri);
+        return response;
+
+    }
+
+    /**
+     * post请求读取InputStream 用于文件下载等
+     *
+     * @param flag
+     * @param uri
+     * @param params
+     * @return
+     */
+    public synchronized HttpResult postForInputStream(Flag flag, String uri, List<NameValuePair> params) {
+        String url = "";
+        if (flag.equals(Flag.DTUIC))
+            url = BaseTest.dtuicurl + uri;
+
+        // 2. 创建请求方法的实例，并定请求URL，添加请求参数。
+        HttpPost post = postForm(url, params);
+
+        setHttpHeaderCookie(post);
+
+        log.info("create httppost : " + url);
+
+        HttpResult response = invoke(post, true);
+
+        setHttpResonseCookie(response);
+
+        checkResponseException(response, uri);
+        return response;
+    }
+
+    public HttpResult get(String uri, List<NameValuePair> params) {
+        return get(Flag.DTUIC, uri, params);
+    }
+
+    /**
+     * get带参数
+     *
+     * @param uri
+     * @param params
+     * @return
+     */
+    public HttpResult get(Flag flag, String uri, List<NameValuePair> params) {
+        String url = "";
+        if (flag.equals(Flag.DTUIC))
+            url = BaseTest.dtuicurl + uri + "?" + URLEncodedUtils.format(params, Consts.UTF_8);
+
+        log.info("create httpget : " + url);
+
+        HttpGet get = new HttpGet(url);
+        setHttpHeaderCookie(get);
+
+        HttpResult response = invoke(get);
+
+        setHttpResonseCookie(response);
+        checkResponseException(response, uri);
+        return response;
+
+    }
+
+    public HttpResult get(String uri, Map<String, Object> params) {
+        return get(Flag.DTUIC, uri, params);
+
+    }
+
+    /**
+     * HTTP GET请求。
+     *
+     * @return
+     */
+    public HttpResult get(Flag flag, String uri, Map<String, Object> params) {
+        String url = "";
+        if (flag.equals(Flag.DTUIC))
+            url = BaseTest.dtuicurl + uri + "?";
+        for (String key : params.keySet()) {
+            url += key + "=" + params.get(key) + "&";
+        }
+        url = url.substring(0, url.length() - 1);
+        HttpGet get = new HttpGet(url);
+        log.info("create httpget : " + url);
+
+        return invoke(get);
+    }
+
+    public HttpResult get(String uri, List<NameValuePair> params, String... pathParams) {
+        return get(Flag.DTUIC, uri, params, pathParams);
+    }
+
+    /**
+     * @param flag
+     * @param uri
+     * @param params
+     * @param pathParams
+     * @return
+     */
+    public HttpResult get(Flag flag, String uri, List<NameValuePair> params, String... pathParams) {
+        String url = "";
+        if (flag.equals(Flag.DTUIC))
+            url = BaseTest.dtuicurl + uri;
+        for (String p : pathParams)
+            url += "/" + p;
+
+        url += "?" + URLEncodedUtils.format(params, Consts.UTF_8);
+
+        HttpGet get = new HttpGet(url);
+        setHttpHeaderCookie(get);
+        log.info("create httpget : " + url);
+
+        HttpResult response = invoke(get);
+
+        setHttpResonseCookie(response);
+        checkResponseException(response, uri);
+        return response;
+    }
+
+
+    public HttpResult get(String uri, String... pathParams) {
+        return get(Flag.DTUIC, uri, pathParams);
+    }
+
+
+    /**
+     * 传入多个参数
+     *
+     * @param uri
+     * @param pathParams
+     * @return
+     */
+    public HttpResult get(Flag flag, String uri, String... pathParams) {
+        String url = "";
+        if (flag.equals(Flag.DTUIC))
+            url = BaseTest.dtuicurl + uri;
+        for (String p : pathParams)
+            url += "/" + p;
+
+        HttpGet get = new HttpGet(url);
+        log.info("create httpget : " + url);
+
+        return invoke(get);
+    }
+
+
+    public HttpResult get(String uri) {
+        return get(Flag.DTUIC, uri);
+    }
+
+    public HttpResult get(Flag flag, String uri) {
+        String url = "";
+        if (flag.equals(Flag.DTUIC))
+            url = BaseTest.dtuicurl + uri;
+
+        HttpGet get = new HttpGet(url);
+
+        log.info("create httpget : " + url);
+        setHttpHeaderCookie(get);
+
+        HttpResult response = invoke(get);
+        setHttpResonseCookie(response);
+        checkResponseException(response, uri);
+        return response;
+
+    }
+
+    public HttpResult gets(String uri, Map<Integer, Integer> params) {
+        return gets(Flag.DTUIC, uri, params);
+    }
+
+    public HttpResult gets(Flag flag, String uri, Map<Integer, Integer> params) {
+        String url = "";
+        if (flag.equals(Flag.DTUIC))
+            url = BaseTest.dtuicurl + uri;
+        for (Integer key : params.keySet()) {
+            url += params.get(key) + "/";
+        }
+        url = url.substring(0, url.length() - 1);
+        HttpGet get = new HttpGet(url);
+        log.info("create httpget : " + url);
+
+        return invoke(get);
+    }
+
+    public HttpResult options(String uri, Map<String, Object> params) {
+        return options(Flag.DTUIC, uri, params);
+    }
+
+    /**
+     * HTTP OPTIONS请求。
+     *
+     * @return
+     */
+    public HttpResult options(Flag flag, String uri, Map<String, Object> params) {
+        String url = "";
+        if (flag.equals(Flag.DTUIC))
+            url = BaseTest.dtuicurl + uri + "?";
+        for (String key : params.keySet()) {
+            url += key + "=" + params.get(key) + "&";
+        }
+        url = url.substring(0, url.length() - 1);
+
+        HttpOptions options = new HttpOptions(url);
+        log.info("create httpoptions : " + url);
+
+        return invoke(options);
+    }
+
+    public synchronized HttpResult upload(String uri, Map<String, Object> params, File file) throws ClientProtocolException, IOException {
+        return upload(Flag.DTUIC, uri, params, file);
+    }
+
+    /**
+     * 适用于接口带token的，默认false
+     */
+    public synchronized HttpResult upload(Flag flag, String uri, Map<String, Object> params, File file) throws ClientProtocolException, IOException {
+        String url = "";
+        if (flag.equals(Flag.DTUIC))
+            url = BaseTest.dtuicurl + uri + "?";
+        if (params != null) {
+            for (String key : params.keySet()) {
+                url += key + "=" + params.get(key) + "&";
+            }
+        }
+
+        url = url.substring(0, url.length() - 1);
+        MultipartEntityBuilder entity = MultipartEntityBuilder.create().addBinaryBody("file", file, ContentType.create("application/octet-stream"), file.getName());
+        HttpPost httpPost = new HttpPost(url);
+        log.info("create httpupload : " + url);
+        httpPost.setEntity(entity.build());
+        HttpResult response = invoke(httpPost);
+        checkResponseException(response, uri);
+        return response;
+    }
+
+    public HttpResult delete(String uri, String param) {
+        return delete(Flag.DTUIC, uri, param);
+    }
+
+    public HttpResult delete(Flag flag, String uri, String param) {
+
+        String url = "";
+        if (flag.equals(Flag.DTUIC))
+            url = BaseTest.dtuicurl + uri + "/" + param;
+        HttpDelete delete = new HttpDelete(url);
+        log.info("create httpdelete : " + url);
+
+        return invoke(delete);
+    }
+
+    public HttpResult delete(String uri, Map<String, Object> params) {
+        return delete(Flag.DTUIC, uri, params);
+    }
+
+    public HttpResult delete(Flag flag, String uri, Map<String, Object> params) {
+        String url = "";
+        if (flag.equals(Flag.DTUIC))
+            url = BaseTest.dtuicurl + uri + "?";
+        for (String key : params.keySet()) {
+            url += key + "=" + params.get(key) + "&";
+        }
+        url = url.substring(0, url.length() - 1);
+
+        HttpDelete delete = new HttpDelete(url);
+        log.info("create httpdelete : " + url);
+
+        return invoke(delete);
+    }
+
+
+    private HttpResult invoke(HttpRequestBase request, Boolean isGetInputStream) {
+        if (isGetInputStream) {
+            if (this._headers != null) {
+                //
+                addHeaders(request);
+            }
+
+            try {
+                // 3. 调用HttpClient对象的execute(HttpUriRequest request)发送请求，返回一个HttpResponse。
+                HttpClientContext httpClientContext = getHttpClientContext();
+                HttpResponse response = _httpclient.execute(request, httpClientContext);
+
+                int code = response.getStatusLine().getStatusCode();
+                InputStream ism = response.getEntity().getContent();
+                Map<String, String> headerMap = new HashMap<String, String>();
+                Header headers[] = response.getAllHeaders();
+                if (headers != null) {
+                    for (Header header : headers) {
+                        headerMap.put(header.getName(), header.getValue());
+                    }
+                }
+                return new HttpResult(code, null, headerMap, ism);
+                // log.info("execute http success... ; body = " + EntityUtils.toString(response.getEntity()));
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                log.info("execute http exception...");
+                throw new RuntimeException(e);
+            }
+
+        } else
+            return this.invoke(request);
+    }
+
+    /**
+     * 发送请求，处理响应。
+     *
+     * @param request
+     * @return http://stackoverflow.com/questions/19165420/socket-closed-exception-when-trying-to-read-httpresponse
+     */
+    private HttpResult invoke(HttpRequestBase request) {
+        if (this._headers != null) {
+            //
+            addHeaders(request);
 //            log.info("addHeaders to http ...");
-		}
+        }
 
-		try
-		{
-			// 3. 调用HttpClient对象的execute(HttpUriRequest request)发送请求，返回一个HttpResponse。
-			HttpClientContext httpClientContext = getHttpClientContext();
-			HttpResponse  response = _httpclient.execute(request,httpClientContext);
-			System.out.println("访问后获取的常规Cookie:=========");
-			Header[] setCookieHeaders = response.getHeaders("Set-Cookie");
-			String cookieHeaders = "";
-			for (Header header:setCookieHeaders
-				 ) {
-				cookieHeaders += header.getValue();
-			}
+        try {
+            // 3. 调用HttpClient对象的execute(HttpUriRequest request)发送请求，返回一个HttpResponse。
+            HttpClientContext httpClientContext = getHttpClientContext();
+            HttpResponse response = _httpclient.execute(request, httpClientContext);
+            System.out.println("访问后获取的常规Cookie:=========");
+            Header[] setCookieHeaders = response.getHeaders("Set-Cookie");
+            String cookieHeaders = "";
+            for (Header header : setCookieHeaders
+            ) {
+                cookieHeaders += header.getValue();
+            }
 
-			request.addHeader("Cookie",cookieHeaders);
-			for (Cookie c:cookieStore.getCookies()
-				 ) {
-				System.out.println(c.getName()+":" + c.getValue());
-			}
-			int code = response.getStatusLine().getStatusCode();
-			String body = EntityUtils.toString(response.getEntity(),"utf-8");
-			Map<String, String> headerMap = new HashMap<String, String>();
-			Header headers[]=response.getAllHeaders();
-			if(headers !=null){
-				for(Header header:headers){
-					headerMap.put(header.getName(), header.getValue());
-				}
-			}
-			return new HttpResult(code, body, headerMap);
-			// log.info("execute http success... ; body = " + EntityUtils.toString(response.getEntity()));
+            request.addHeader("Cookie", cookieHeaders);
+            for (Cookie c : cookieStore.getCookies()
+            ) {
+                System.out.println(c.getName() + ":" + c.getValue());
+            }
+            int code = response.getStatusLine().getStatusCode();
+            String body = EntityUtils.toString(response.getEntity(), "utf-8");
+            Map<String, String> headerMap = new HashMap<String, String>();
+            Header headers[] = response.getAllHeaders();
+            if (headers != null) {
+                for (Header header : headers) {
+                    headerMap.put(header.getName(), header.getValue());
+                }
+            }
+            return new HttpResult(code, body, headerMap);
+            // log.info("execute http success... ; body = " + EntityUtils.toString(response.getEntity()));
 
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-			log.info("execute http exception...");
-			throw new RuntimeException(e);
-		}
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.info("execute http exception...");
+            throw new RuntimeException(e);
+        }
 //        finally
 //        {
 //            // 4. 无论执行方法是否成功，都必须释放连接。
@@ -714,324 +702,244 @@ public class MyHttpClient
 //            log.info("release http ...");
 //        }
 
-	}
+    }
 
-	/**
-	 * 获取post方法。
-	 *
-	 * @param url
-	 * @param params
-	 * @return
-	 */
-	private HttpPost postForm(String url, Map<String, String> params)
-	{
-		HttpPost httppost = new HttpPost(url);
-		List<NameValuePair> nvps = new ArrayList<NameValuePair>();
+    /**
+     * 获取post方法。
+     *
+     * @param url
+     * @param params
+     * @return
+     */
+    private HttpPost postForm(String url, Map<String, String> params) {
+        HttpPost httppost = new HttpPost(url);
+        List<NameValuePair> nvps = new ArrayList<NameValuePair>();
 
-		// 组装参数。
-		Set<String> keySet = params.keySet();
-		for (String key : keySet)
-		{
-			nvps.add(new BasicNameValuePair(key, params.get(key)));
-		}
+        // 组装参数。
+        Set<String> keySet = params.keySet();
+        for (String key : keySet) {
+            nvps.add(new BasicNameValuePair(key, params.get(key)));
+        }
 
-		log.info("set params:"+nvps);
-		httppost.setEntity(new UrlEncodedFormEntity(nvps, Consts.UTF_8));
+        log.info("set params:" + nvps);
+        httppost.setEntity(new UrlEncodedFormEntity(nvps, Consts.UTF_8));
 
-		return httppost;
-	}
+        return httppost;
+    }
 
-	/**
-	 * 获取post方法。
-	 *
-	 * @param url
-	 * @param params
-	 * @return
-	 */
-	private HttpPost postForm(String url, Map<String, String> params,String cookieValue)
-	{
-		HttpPost httppost = new HttpPost(url);
-		List<NameValuePair> nvps = new ArrayList<NameValuePair>();
+    /**
+     * 获取post方法。
+     *
+     * @param url
+     * @param params
+     * @return
+     */
+    private HttpPost postForm(String url, Map<String, String> params, String cookieValue) {
+        HttpPost httppost = new HttpPost(url);
+        List<NameValuePair> nvps = new ArrayList<NameValuePair>();
 
-		// 组装参数。
-		Set<String> keySet = params.keySet();
-		for (String key : keySet)
-		{
-			nvps.add(new BasicNameValuePair(key, params.get(key)));
-		}
+        // 组装参数。
+        Set<String> keySet = params.keySet();
+        for (String key : keySet) {
+            nvps.add(new BasicNameValuePair(key, params.get(key)));
+        }
 
-		log.info("set params:"+nvps);
-		httppost.setEntity(new UrlEncodedFormEntity(nvps, Consts.UTF_8));
-		httppost.addHeader("Authorization", "your token"); //认证token
-		httppost.addHeader("Content-Type", "application/json");
-		httppost.addHeader("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36");
-		//httppost.addHeader("Cookie",cookieValue );
-		return httppost;
-	}
+        log.info("set params:" + nvps);
+        httppost.setEntity(new UrlEncodedFormEntity(nvps, Consts.UTF_8));
+        httppost.addHeader("Authorization", "your token"); //认证token
+        httppost.addHeader("Content-Type", "application/json");
+        httppost.addHeader("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36");
+        //httppost.addHeader("Cookie",cookieValue );
+        return httppost;
+    }
 
 
-	/**
-	 * 获取post方法。
-	 *
-	 * @param url
-	 * @param params
-	 * @return
-	 */
-	private HttpPost postForm(String url, List<NameValuePair> params)
-	{
-		HttpPost httpost = new HttpPost(url);
-		log.info("set params:"+params);
-		httpost.setEntity(new UrlEncodedFormEntity(params, Consts.UTF_8));
-		return httpost;
-	}
+    /**
+     * 获取post方法。
+     *
+     * @param url
+     * @param params
+     * @return
+     */
+    private HttpPost postForm(String url, List<NameValuePair> params) {
+        HttpPost httpost = new HttpPost(url);
+        log.info("set params:" + params);
+        httpost.setEntity(new UrlEncodedFormEntity(params, Consts.UTF_8));
+        return httpost;
+    }
 
 
-	/**
-	 * 增加消息头。
-	 *
-	 * @param httpost
-	 */
-	private void addHeaders(HttpUriRequest httpost)
-	{
-		Iterator<Entry<String, String>> it = this._headers.entrySet()
-				.iterator();
-		Entry<String, String> entry = null;
-		String name = null;
-		String value = null;
+    /**
+     * 增加消息头。
+     *
+     * @param httpost
+     */
+    private void addHeaders(HttpUriRequest httpost) {
+        Iterator<Entry<String, String>> it = this._headers.entrySet()
+                .iterator();
+        Entry<String, String> entry = null;
+        String name = null;
+        String value = null;
 
-		while (it.hasNext())
-		{
-			entry = it.next();
-			name = entry.getKey();
-			value = entry.getValue();
+        while (it.hasNext()) {
+            entry = it.next();
+            name = entry.getKey();
+            value = entry.getValue();
 
-			httpost.addHeader(name, value);
-		}
-	}
+            httpost.addHeader(name, value);
+        }
+    }
 
-	/**
-	 * 关闭HTTP客户端链接。
-	 */
-	@SuppressWarnings("deprecation")
-	public void shutdown()
-	{
-		_httpclient.getConnectionManager().shutdown();
-		log.info("shutdown _httpclient ...");
-	}
+    /**
+     * 关闭HTTP客户端链接。
+     */
+    @SuppressWarnings("deprecation")
+    public void shutdown() {
+        _httpclient.getConnectionManager().shutdown();
+        log.info("shutdown _httpclient ...");
+    }
 
-	public Map<String,String> getCookies(){
-		Map<String, String> map = new HashMap<String, String>();
-		for(Cookie cookie:cookieStore.getCookies()){
-			map.put(cookie.getName(), cookie.getValue());
-		}
-		return map;
-	}
+    public Map<String, String> getCookies() {
+        Map<String, String> map = new HashMap<String, String>();
+        for (Cookie cookie : cookieStore.getCookies()) {
+            map.put(cookie.getName(), cookie.getValue());
+        }
+        return map;
+    }
 
-	public  String getToken() {
-		return token;
-	}
+    public String getToken() {
+        return token;
+    }
 
-	public void setToken(String token) {
-		this.token = token;
-	}
+    public void setToken(String token) {
+        this.token = token;
+    }
 
-	public String getxAutoToken() {
-		return xAutoToken;
-	}
+    public String getxAutoToken() {
+        return xAutoToken;
+    }
 
-	public void setxAutoToken(String xAutoToken) {
-		this.xAutoToken = xAutoToken;
-	}
+    public void setxAutoToken(String xAutoToken) {
+        this.xAutoToken = xAutoToken;
+    }
 
-	public String getCookie() {
-		return cookie;
-	}
+    public String getCookie() {
+        return cookie;
+    }
 
-	public void setCookie(String cookie) {
-		this.cookie = cookie;
-	}
+    public void setCookie(String cookie) {
+        this.cookie = cookie;
+    }
 
-	/***
-	 * 在@Token方法头加上二次提交token
-	 * @param uri
-	 * @param get
-	 */
-	public void setHttpHeaderToken(String uri ,HttpGet get){
-		if(ActionsDefine.CheckTokenActionList.contains(uri)){
-			log.debug("设置请求头UNIQUE_SUBMIT_TOKEN..."+getToken());
-			get.addHeader(ActionsDefine.UNIQUE_SUBMIT_TOKEN, getToken());
-		}
-		if(ActionsDefine.CheckauthTokenList.contains(uri)){
-			log.debug("设置请求头X_Auth_Mytijian_Token..."+getxAutoToken());
-			get.addHeader(ActionsDefine.X_Auth_Mytijian_Token, getxAutoToken());
-		}
-	}
+    /**
+     * 适用于接口带token的，默认false
+     *
+     * @param flag
+     * @param uri
+     * @param params
+     * @param pairs
+     */
+    public synchronized HttpResult post(Flag flag, String uri, List<NameValuePair> params, Map<String, String> pairs) {
+        // 2. 创建请求方法的实例，并指定请求URL，添加请求参数。
+        String url = "";
+        if (flag.equals(Flag.DTUIC))
+            url = BaseTest.dtuicurl + uri + "?";
+        for (int i = 0; i < params.size(); i++) {
+            url += params.get(i).getName() + "=" + params.get(i).getValue() + "&";
+        }
+        url = url.substring(0, url.length() - 1);
 
-	/***
-	 * 在@Token方法头加上二次提交token
-	 * @param uri
-	 * @param post
-	 */
-	public void setHttpHeaderToken(String uri ,HttpPost post){
-		if(ActionsDefine.CheckTokenActionList.contains(uri)){
-			log.debug("设置请求头UNIQUE_SUBMIT_TOKEN..."+getToken());
-			post.addHeader(ActionsDefine.UNIQUE_SUBMIT_TOKEN, getToken());
-		}
-		if(ActionsDefine.CheckauthTokenList.contains(uri)){
-			log.debug("设置请求头X_Auth_Mytijian_Token..."+getxAutoToken());
-			post.addHeader(ActionsDefine.X_Auth_Mytijian_Token, getxAutoToken());
-		}
-	}
+        HttpPost post = new HttpPost(url);
+        post.addHeader("Content-type", "application/x-www-form-urlencoded;charset=UTF-8");
+        post.setHeader("Accept", "application/json");
 
+        setHttpHeaderCookie(post);
 
-	/***
-	 * 在@Token方法头加上二次提交token
-	 */
-	public void setHttpHeaderToken(String uri ,HttpPut put){
-		if(ActionsDefine.CheckTokenActionList.contains(uri)){
-			log.debug("设置请求头UNIQUE_SUBMIT_TOKEN..."+getToken());
-			put.addHeader(ActionsDefine.UNIQUE_SUBMIT_TOKEN, getToken());
-		}
-		if(ActionsDefine.CheckauthTokenList.contains(uri)){
-			log.debug("设置请求头X_Auth_Mytijian_Token..."+getxAutoToken());
-			put.addHeader(ActionsDefine.X_Auth_Mytijian_Token, getxAutoToken());
-		}
-	}
+        log.info("create httppost : " + url);
+        log.info("set params:" + pairs);
+        List<NameValuePair> nvps = new ArrayList<NameValuePair>();
 
-	/**
-	 * 保存二次提交token至本地
-	 * @param uri
-	 * @param response
-	 */
-	public void setHttpResponseToken(String uri,HttpResult response){
-		if( ActionsDefine.SetTokenActionList.contains(uri)){
-			Map<String,String> maps = response.getHeader();
-			if(maps.containsKey(ActionsDefine.UNIQUE_SUBMIT_TOKEN)){
-				log.debug("提取UNIQUE_SUBMIT_TOKEN...."+maps.get(ActionsDefine.UNIQUE_SUBMIT_TOKEN));
-				setToken(maps.get(ActionsDefine.UNIQUE_SUBMIT_TOKEN));
-			}
-		}
-		if( ActionsDefine.SetAuthTokenList.contains(uri)){
-			Map<String,String> maps = response.getHeader();
-			if(maps.containsKey(ActionsDefine.X_Auth_Mytijian_Token)){
-				log.debug("提取X_Auth_Mytijian_Token...."+maps.get(ActionsDefine.X_Auth_Mytijian_Token));
-				setxAutoToken(maps.get(ActionsDefine.X_Auth_Mytijian_Token));
-			}
-		}
+        // 组装参数。
+        Set<String> keySet = pairs.keySet();
 
-	}
+        for (String key : keySet) {
+            nvps.add(new BasicNameValuePair(key, pairs.get(key)));
+        }
 
+        log.info("set params:" + nvps);
+        post.setEntity(new UrlEncodedFormEntity(nvps, Consts.UTF_8));
+        //请求
+        HttpResult response = invoke(post);
 
-	/**
-	 * 适用于接口带token的，默认false
-	 * @param flag
-	 * @param  uri
-	 * @param params
-	 * @param pairs
-	 */
-	public synchronized HttpResult post(Flag flag,String uri,List<NameValuePair>params, Map<String, String> pairs)
-	{
-		// 2. 创建请求方法的实例，并指定请求URL，添加请求参数。
-		String url = "";
-		if(flag.equals(Flag.DTUIC))
-			url = BaseTest.dtuicurl + uri+"?" ;
-		for (int i=0;i<params.size();i++) {
-			url+=params.get(i).getName()+"="+params.get(i).getValue()+"&";
-		}
-		url=url.substring(0,url.length()-1);
+        setHttpResonseCookie(response);
 
-		HttpPost post = new HttpPost(url);
-		post.addHeader("Content-type","application/x-www-form-urlencoded;charset=UTF-8");
-		post.setHeader("Accept", "application/json");
+        checkResponseException(response, uri);
+        return response;
+    }
 
-		setHttpHeaderCookie(post);
+    /**
+     * 用于接口只带一个int类
+     *
+     * @param flag
+     * @param uri
+     * @param param
+     * @return
+     */
+    public synchronized HttpResult post(Flag flag, String uri, int param) {
+        // 2. 创建请求方法的实例，并指定请求URL，添加请求参数。
+        String url = "";
+        if (flag.equals(Flag.DTUIC))
+            url = BaseTest.dtuicurl + uri + param;
 
-		log.info("create httppost : " + url);
-		log.info("set params:"+pairs);
-		List<NameValuePair> nvps = new ArrayList<NameValuePair>();
+        HttpPost post = new HttpPost(url);
+        post.addHeader("Content-type", "application/x-www-form-urlencoded");
+        post.setHeader("Accept", "application/json");
 
-		// 组装参数。
-		Set<String> keySet = pairs.keySet();
+        setHttpHeaderCookie(post);
 
-		for (String key : keySet)
-		{
-			nvps.add(new BasicNameValuePair(key, pairs.get(key)));
-		}
+        log.info("create httppost : " + url);
 
-		log.info("set params:"+nvps);
-		post.setEntity(new UrlEncodedFormEntity(nvps, Consts.UTF_8));
-		//请求
-		HttpResult response = invoke(post);
+        //请求
+        HttpResult response = invoke(post);
 
-		setHttpResonseCookie(response);
+        setHttpResonseCookie(response);
+        checkResponseException(response, uri);
+        return response;
+    }
 
-		checkResponseException(response,uri);
-		return response;
-	}
+    public synchronized HttpResult put(Flag flag, String uri, String jsonObj) {
+        // 2. 创建请求方法的实例，并指定请求URL，添加请求参数。
+        String url = "";
+        if (flag.equals(Flag.DTUIC))
+            url = BaseTest.dtuicurl + uri;
 
-	/**
-	 * 用于接口只带一个int类
-	 * @param flag
-	 * @param uri
-	 * @param param
-	 * @return
-	 */
-	public synchronized HttpResult post(Flag flag,String uri,int param)
-	{
-		// 2. 创建请求方法的实例，并指定请求URL，添加请求参数。
-		String url = "";
-		if(flag.equals(Flag.DTUIC))
-			url = BaseTest.dtuicurl + uri + param ;
+        HttpPut put = new HttpPut(url);
+        put.addHeader("Content-type", "application/json; charset=utf-8");
+        put.setHeader("Accept", "application/json");
 
-		HttpPost post = new HttpPost(url);
-		post.addHeader("Content-type","application/x-www-form-urlencoded");
-		post.setHeader("Accept", "application/json");
+        setHttpHeaderCookie(put);
 
-		setHttpHeaderCookie(post);
+        log.info("jsonObj:" + jsonObj);
+        put.setEntity(new StringEntity(jsonObj, Charset.forName("UTF-8")));
 
-		log.info("create httppost : " + url);
+        log.info("create httpput : " + url);
 
-		//请求
-		HttpResult response = invoke(post);
+        // 请求
+        HttpResult response = invoke(put);
 
-		setHttpResonseCookie(response);
-		checkResponseException(response,uri);
-		return response;
-	}
+        setHttpResonseCookie(response);
 
-	public synchronized HttpResult put(Flag flag, String uri, String jsonObj) {
-		// 2. 创建请求方法的实例，并指定请求URL，添加请求参数。
-		String url = "";
-		if (flag.equals(Flag.DTUIC))
-			url = BaseTest.dtuicurl + uri;
+        checkResponseException(response, uri);
+        return response;
 
-		HttpPut put = new HttpPut(url);
-		put.addHeader("Content-type", "application/json; charset=utf-8");
-		put.setHeader("Accept", "application/json");
+    }
 
-		setHttpHeaderCookie(put);
+    private void checkResponseException(HttpResult result, String uri) {
+        if (result.getCode() == HttpStatus.SC_OK)
+            if (result.getBody() != null)
+                Assert.assertFalse(result.getBody().contains("EX_0_0_SYS_00_00_000"), uri + "提示:" + result.getBody());
 
-		log.info("jsonObj:" + jsonObj);
-		put.setEntity(new StringEntity(jsonObj, Charset.forName("UTF-8")));
-
-		log.info("create httpput : " + url);
-
-		// 请求
-		HttpResult response = invoke(put);
-
-		setHttpResonseCookie(response);
-
-		checkResponseException(response,uri);
-		return response;
-
-	}
-
-	private void checkResponseException(HttpResult result,String uri){
-		if(result.getCode() == HttpStatus.SC_OK)
-			if(result.getBody()!=null)
-				Assert.assertFalse(result.getBody().contains("EX_0_0_SYS_00_00_000"),uri+"提示:"+result.getBody());
-
-	}
+    }
 
 
 }
