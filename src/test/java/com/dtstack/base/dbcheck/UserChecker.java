@@ -27,4 +27,8 @@ public class UserChecker extends BaseTest {
         user.setEmail(map.get("email").toString());
         return user;
     }
+
+    public void  findUserByIdAndIsDeletedIsFalse(int userId){
+
+    }
 }

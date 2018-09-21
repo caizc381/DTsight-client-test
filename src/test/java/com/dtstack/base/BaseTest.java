@@ -11,6 +11,8 @@ import java.util.concurrent.CountDownLatch;
 
 import com.dtstack.model.domain.ide.Tenant;
 import com.dtstack.model.domain.ide.User;
+import com.dtstack.util.Cookies;
+import org.apache.http.cookie.Cookie;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
 
@@ -44,6 +46,7 @@ public class BaseTest implements ConfDefine,ActionsDefine{
 	public static int mongoWaitTime;
 	public static String dtuicurl;
 	public static String ideurl;
+	public static String uicapiurl;
 	public static String mysqlUrl;
 	public static String mysqlUser;
 	public static String mysqlPwd;
@@ -78,6 +81,7 @@ public class BaseTest implements ConfDefine,ActionsDefine{
 
 		dtuicurl=envConf.getValue(ConfDefine.DTUICSITE,ConfDefine.DTUICURL);
 		ideurl = envConf.getValue(ConfDefine.IDESITE, ConfDefine.IDEURL);
+		uicapiurl=envConf.getValue(ConfDefine.UICAPISITE,ConfDefine.UICAPIURL);
 
 		useStaf = ("yes".equals(testConf.getValue(PUBLIC, USE_STAF))
 				|| "true".equals(testConf.getValue(PUBLIC, USE_STAF))) ? true : false;

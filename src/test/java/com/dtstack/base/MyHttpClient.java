@@ -4,13 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Set;
 
 import org.apache.http.*;
 import org.apache.http.client.ClientProtocolException;
@@ -76,6 +71,8 @@ public class MyHttpClient {
     private String cookie;
 
     private String xAutoToken;
+
+    private List<String> setCookies = new ArrayList<>();
 
     /**
      * 使用默认客户端对象。
@@ -172,8 +169,6 @@ public class MyHttpClient {
         if (flag.equals(Flag.DTUIC))
             url = BaseTest.dtuicurl + uri;
         // 2. 创建请求方法的实例，并指定请求URL，添加请求参数。
-        //HttpPost post = postForm(url, params,ActionsDefine.cookieValue);
-
         HttpPost post = postForm(url, params);
         setHttpHeaderCookie(post);
 
@@ -182,6 +177,8 @@ public class MyHttpClient {
         HttpResult response = invoke(post);
 
         setHttpResonseCookie(response);
+
+        //System.out.println("response访问后获取的常规Cookie:=========");
 
         checkResponseException(response, uri);
         return response;
@@ -196,13 +193,14 @@ public class MyHttpClient {
         Map<String, String> headers = response.getHeader();
         String headerCookies = "";
         for (Map.Entry<String, String> entry : headers.entrySet()) {
-            System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
-            if (entry.getKey().equals("Set-Cookie")) {
+            //System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
+            if (entry.getKey().equals("Set-Cookie") && !entry.getValue().equals("")) {
                 headerCookies += entry.getValue();
             }
         }
-        setCookie(headerCookies);
-
+        if (!headerCookies.equals("")) {
+            setCookie(headerCookies);
+        }
     }
 
     public synchronized HttpResult post(String uri, String jsonObj) {
@@ -254,7 +252,7 @@ public class MyHttpClient {
         HttpPost post = new HttpPost(url);
         post.addHeader("Content-type", "application/json; charset=utf-8");
         post.setHeader("Accept", "application/json");
-        post.addHeader("Cookie", ActionsDefine.cookieValue);
+        //post.addHeader("Cookie",getCookie());
 
         setHttpHeaderCookie(post);
         log.info("jsonObj:" + jsonObj);
@@ -268,6 +266,13 @@ public class MyHttpClient {
         setHttpResonseCookie(response);
 
         checkResponseException(response, uri);
+
+        System.out.println("============ request cookie===============");
+        System.out.println(Arrays.toString(post.getHeaders("Cookie")));
+
+
+        System.out.println("============ response cookie===============");
+        System.out.println(response.getHeader().get("Set-Cookie"));
         return response;
 
     }
@@ -496,6 +501,9 @@ public class MyHttpClient {
         String url = "";
         if (flag.equals(Flag.DTUIC))
             url = BaseTest.dtuicurl + uri;
+        if (flag.equals(Flag.UICAPI)) {
+            url = BaseTest.uicapiurl + uri;
+        }
 
         HttpGet get = new HttpGet(url);
 
@@ -504,6 +512,8 @@ public class MyHttpClient {
 
         HttpResult response = invoke(get);
         setHttpResonseCookie(response);
+        //System.out.println("response访问后获取的常规Cookie:=========");
+        
         checkResponseException(response, uri);
         return response;
 
@@ -663,19 +673,23 @@ public class MyHttpClient {
         try {
             // 3. 调用HttpClient对象的execute(HttpUriRequest request)发送请求，返回一个HttpResponse。
             HttpClientContext httpClientContext = getHttpClientContext();
+            Header[] requestHeaders = request.getHeaders("Cookie");
+            //System.out.println("request访问后获取的常规Cookie:=========");
+
             HttpResponse response = _httpclient.execute(request, httpClientContext);
-            System.out.println("访问后获取的常规Cookie:=========");
+
             Header[] setCookieHeaders = response.getHeaders("Set-Cookie");
+            //System.out.println("response访问后获取的常规Cookie:=========" + setCookieHeaders.length + "     this.cookie = "+ getCookie());
+
             String cookieHeaders = "";
             for (Header header : setCookieHeaders
             ) {
-                cookieHeaders += header.getValue();
+                cookieHeaders += header.getValue() + ";";
             }
 
-            request.addHeader("Cookie", cookieHeaders);
-            for (Cookie c : cookieStore.getCookies()
-            ) {
-                System.out.println(c.getName() + ":" + c.getValue());
+            if (setCookieHeaders.length == 0) {
+                response.setHeader("Set-Cookie", this.getCookie());
+
             }
             int code = response.getStatusLine().getStatusCode();
             String body = EntityUtils.toString(response.getEntity(), "utf-8");
@@ -686,6 +700,10 @@ public class MyHttpClient {
                     headerMap.put(header.getName(), header.getValue());
                 }
             }
+            if (!cookieHeaders.equals("")) {
+                headerMap.put("Set-Cookie", cookieHeaders);
+            }
+
             return new HttpResult(code, body, headerMap);
             // log.info("execute http success... ; body = " + EntityUtils.toString(response.getEntity()));
 

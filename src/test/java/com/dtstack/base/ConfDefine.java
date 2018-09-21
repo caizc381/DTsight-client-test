@@ -17,6 +17,7 @@ public interface ConfDefine {
 	public final static String PUBLIC = "public";
 	public final static String DTUICSITE="dtuic-site";
 	public final static String IDESITE = "ide-site";
+	public final static String UICAPISITE="uic-api-site";
 
 	public final static String USE_STAF = "use_staf";
 
@@ -31,6 +32,7 @@ public interface ConfDefine {
 	public final static String MAXCONNECTIONTOTAL = "maxConnTotal";
 	public final static String DTUICURL="dtuic_url";
 	public final static String IDEURL = "ide_url";
+	public final static String UICAPIURL="api_url";
 	public final static String MYSQL_DRIVER = "mysql_driver";
 	public final static String MYSQL_URL = "mysql_url";
 	public final static String MYSQL_USER = "mysql_user";

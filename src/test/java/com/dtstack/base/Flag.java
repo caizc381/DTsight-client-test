@@ -3,7 +3,8 @@ package com.dtstack.base;
 public enum Flag {
 
 	DTUIC(1),
-	IDE(2);
+	UICAPI(2),
+	IDE(3);
 	
 	private int flagnum;
 	

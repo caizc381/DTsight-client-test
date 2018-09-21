@@ -21,6 +21,14 @@
 		<aspectj.version>1.8.10</aspectj.version>
 	</properties>
 
+	<repositories>
+		<repository>
+			<id>Dtstack</id>
+			<name>Dtstack Repository</name>
+			<url>http://nexus.dev.dtstack.cn/nexus/content/groups/public/</url>
+		</repository>
+	</repositories>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.testng</groupId>
@@ -194,6 +202,26 @@
 			<groupId>com.aventstack</groupId>
 			<artifactId>extentreports</artifactId>
 			<version>3.1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.dtstack</groupId>
+			<artifactId>dt-lang</artifactId>
+			<version>1.0.5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate.javax.persistence</groupId>
+			<artifactId>hibernate-jpa-2.1-api</artifactId>
+			<version>1.0.2.Final</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>5.2.17.Final</version>
 		</dependency>
 	</dependencies>
 
