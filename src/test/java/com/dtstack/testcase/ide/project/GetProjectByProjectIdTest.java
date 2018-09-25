@@ -1,15 +1,15 @@
-package com.dtstack.testcase.ide;
+package com.dtstack.testcase.ide.project;
 
+import com.alibaba.fastjson.JSON;
 import com.dtstack.base.Flag;
 import com.dtstack.base.HttpResult;
-import com.dtstack.util.ListUtil;
+import com.dtstack.model.domain.ide.Project;
 import com.dtstack.model.vo.ide.ProjectVO;
+import com.dtstack.testcase.ide.IdeBase;
+import com.dtstack.util.ListUtil;
 import org.apache.http.HttpStatus;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import com.dtstack.model.domain.ide.Project;
-
-import com.alibaba.fastjson.JSON;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.dtstack.base.dbcheck.ide;
+package com.dtstack.base.dbcheck.ide.common;
 
 import com.dtstack.base.BaseTest;
 import com.dtstack.dtcenter.common.pager.PageQuery;

@@ -3,7 +3,7 @@ package com.dtstack.testcase.ide.project;
 import com.alibaba.fastjson.JSON;
 import com.dtstack.base.Flag;
 import com.dtstack.base.HttpResult;
-import com.dtstack.base.dbcheck.ide.ProjectChecker;
+import com.dtstack.base.dbcheck.ide.common.ProjectChecker;
 import com.dtstack.dtcenter.common.pager.PageQuery;
 import com.dtstack.model.dto.ide.ProjectDTO;
 import com.dtstack.model.enums.ide.Sort;
