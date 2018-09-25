@@ -1,5 +1,0 @@
-CASENUM,USERNAME,PASSWORD,VALIDATIONCODE,REMARK
-case01,,11111111a,1111,请输入用户名
-case02,mt,,1111,请输入密码
-case03,mt_non-Existent,11111111a,1111,用户名不存在，请重新输入
-case04,mt,111111111a_wrong,1111,用户名或密码错误，请重新输入

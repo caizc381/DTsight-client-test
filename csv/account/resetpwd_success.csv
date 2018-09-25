@@ -1,2 +1,0 @@
-caseNum,hospitalId,accountId,checkPWD,defaultPWD,run,code,message,warning
-case01,1,55763,c1bbd5b0644bc53ddcc612c66080c312,111111,true,200,{},您输入的密码为初始密码，不能登录

@@ -1,5 +1,0 @@
-CaseNum,MealId,MealName,MealPrice,MealGender,ChangeDate,HidePrice,SendMsg,SitePay,VerifyFlag,Group,IdType,IdCard,Gender,Name,CompanyId,ExamItemIdList,CompanyMoney,payOnline,addAccountType,employeeId,mobile,reduceOrderPrice
-case01,14225,刘海函账号套餐,2000,0,false,false,false,true,true,自动化测试组,1,150401199801011650,0,单位测试01,1259,18#38#81,500,false,idCard,,,
-case02,14225,刘海函账号套餐,2000,0,false,false,false,true,true,自动化测试组,1,150401199801011650,0,单位测试01,1259,18#38#81,100,false,idCard,,,203
-case03,14225,刘海函账号套餐,2000,0,false,false,false,true,true,自动化测试组,1,150401199801011650,0,单位测试01,1259,18#38#81,200,true,idCard,,,0
-case04,14225,刘海函账号套餐,2000,0,false,false,false,true,true,自动化测试组,1,42120019930407895X,0,单位测试01,1259,18#38#81,400,true,idCard,,15655555555,104

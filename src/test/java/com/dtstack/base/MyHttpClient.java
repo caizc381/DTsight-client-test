@@ -1,12 +1,5 @@
 package com.dtstack.base;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.Charset;
-import java.util.*;
-import java.util.Map.Entry;
-
 import org.apache.http.*;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.CookieStore;
@@ -14,26 +7,19 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.CookieSpecs;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpDelete;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpOptions;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpPut;
-import org.apache.http.client.methods.HttpRequestBase;
-import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.client.methods.*;
 import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.config.Registry;
 import org.apache.http.config.RegistryBuilder;
 import org.apache.http.cookie.Cookie;
-import org.apache.http.cookie.CookieSpec;
 import org.apache.http.cookie.CookieSpecProvider;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
-//import org.apache.http.entity.mime.MultipartEntityBuilder;
-import org.apache.http.impl.client.*;
-import org.apache.http.impl.cookie.BasicClientCookie;
+import org.apache.http.impl.client.BasicCookieStore;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.client.LaxRedirectStrategy;
 import org.apache.http.impl.cookie.BestMatchSpecFactory;
 import org.apache.http.impl.cookie.BrowserCompatSpecFactory;
 import org.apache.http.message.BasicHeader;
@@ -42,7 +28,14 @@ import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
 
-import com.alibaba.fastjson.JSON;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.Charset;
+import java.util.*;
+import java.util.Map.Entry;
+
+//import org.apache.http.entity.mime.MultipartEntityBuilder;
 
 /**
  * @author huifang
@@ -92,6 +85,7 @@ public class MyHttpClient {
                 .setDefaultRequestConfig(defaultConnectionConfig)
                 .build();
         log.info("create _httpclient ...");
+
     }
 
     private HttpClientContext getHttpClientContext() {
@@ -125,7 +119,7 @@ public class MyHttpClient {
     }
 
     public synchronized HttpResult post(String uri, List<NameValuePair> params) {
-        return post(Flag.DTUIC, uri, params);
+        return post(Flag.UIC, uri, params);
     }
 
     /**
@@ -136,8 +130,8 @@ public class MyHttpClient {
      */
     public synchronized HttpResult post(Flag flag, String uri, List<NameValuePair> params) {
         String url = "";
-        if (flag.equals(Flag.DTUIC))
-            url = BaseTest.dtuicurl + uri;
+        if (flag.equals(Flag.UIC))
+            url = BaseTest.uicurl + uri;
 
         // 2. 创建请求方法的实例，并定请求URL，添加请求参数。
         HttpPost post = postForm(url, params);
@@ -155,7 +149,7 @@ public class MyHttpClient {
 
 
     public synchronized HttpResult post(String uri, Map<String, String> params) {
-        return post(Flag.DTUIC, uri, params);
+        return post(Flag.UIC, uri, params);
     }
 
     /**
@@ -166,8 +160,8 @@ public class MyHttpClient {
      */
     public synchronized HttpResult post(Flag flag, String uri, Map<String, String> params) {
         String url = "";
-        if (flag.equals(Flag.DTUIC))
-            url = BaseTest.dtuicurl + uri;
+        if (flag.equals(Flag.UIC))
+            url = BaseTest.uicurl + uri;
         // 2. 创建请求方法的实例，并指定请求URL，添加请求参数。
         HttpPost post = postForm(url, params);
         setHttpHeaderCookie(post);
@@ -204,14 +198,14 @@ public class MyHttpClient {
     }
 
     public synchronized HttpResult post(String uri, String jsonObj) {
-        return post(Flag.DTUIC, uri, jsonObj);
+        return post(Flag.UIC, uri, jsonObj);
     }
 
     public synchronized HttpResult post(Flag flag, String uri, String jsonObj, String cookieKeyValue) {
         // 2. 创建请求方法的实例，并指定请求URL，添加请求参数。
         String url = "";
-        if (flag.equals(Flag.DTUIC))
-            url = BaseTest.dtuicurl + uri;
+        if (flag.equals(Flag.UIC))
+            url = BaseTest.uicurl + uri;
 
         HttpPost post = new HttpPost(url);
         post.addHeader("Authorization", "your token");//认证token
@@ -244,8 +238,8 @@ public class MyHttpClient {
     public synchronized HttpResult post(Flag flag, String uri, String jsonObj) {
         // 2. 创建请求方法的实例，并指定请求URL，添加请求参数。
         String url = "";
-        if (flag.equals(Flag.DTUIC))
-            url = BaseTest.dtuicurl + uri;
+        if (flag.equals(Flag.UIC))
+            url = BaseTest.uicurl + uri;
         if (flag.equals(Flag.IDE)) {
             url = BaseTest.ideurl + uri;
         }
@@ -278,7 +272,7 @@ public class MyHttpClient {
     }
 
     public synchronized HttpResult post(String uri, Map<String, Object> params, String jsonObj) {
-        return post(Flag.DTUIC, uri, params, jsonObj);
+        return post(Flag.UIC, uri, params, jsonObj);
     }
 
     /**
@@ -287,8 +281,8 @@ public class MyHttpClient {
     public synchronized HttpResult post(Flag flag, String uri, Map<String, Object> params, String jsonObj) {
         // 2. 创建请求方法的实例，并指定请求URL，添加请求参数。
         String url = "";
-        if (flag.equals(Flag.DTUIC))
-            url = BaseTest.dtuicurl + uri + "?";
+        if (flag.equals(Flag.UIC))
+            url = BaseTest.uicurl + uri + "?";
 
         for (String key : params.keySet()) {
             url += key + "=" + params.get(key) + "&";
@@ -317,7 +311,7 @@ public class MyHttpClient {
     }
 
     public synchronized HttpResult post(String uri, List<NameValuePair> params, String jsonObj) {
-        return post(Flag.DTUIC, uri, params, jsonObj);
+        return post(Flag.UIC, uri, params, jsonObj);
     }
 
     /**
@@ -326,8 +320,8 @@ public class MyHttpClient {
     public synchronized HttpResult post(Flag flag, String uri, List<NameValuePair> params, String jsonObj) {
         // 2. 创建请求方法的实例，并指定请求URL，添加请求参数。
         String url = "";
-        if (flag.equals(Flag.DTUIC))
-            url = BaseTest.dtuicurl + uri + "?";
+        if (flag.equals(Flag.UIC))
+            url = BaseTest.uicurl + uri + "?";
         for (int i = 0; i < params.size(); i++) {
             url += params.get(i).getName() + "=" + params.get(i).getValue() + "&";
         }
@@ -364,8 +358,8 @@ public class MyHttpClient {
      */
     public synchronized HttpResult postForInputStream(Flag flag, String uri, List<NameValuePair> params) {
         String url = "";
-        if (flag.equals(Flag.DTUIC))
-            url = BaseTest.dtuicurl + uri;
+        if (flag.equals(Flag.UIC))
+            url = BaseTest.uicurl + uri;
 
         // 2. 创建请求方法的实例，并定请求URL，添加请求参数。
         HttpPost post = postForm(url, params);
@@ -383,7 +377,7 @@ public class MyHttpClient {
     }
 
     public HttpResult get(String uri, List<NameValuePair> params) {
-        return get(Flag.DTUIC, uri, params);
+        return get(Flag.UIC, uri, params);
     }
 
     /**
@@ -395,8 +389,8 @@ public class MyHttpClient {
      */
     public HttpResult get(Flag flag, String uri, List<NameValuePair> params) {
         String url = "";
-        if (flag.equals(Flag.DTUIC))
-            url = BaseTest.dtuicurl + uri + "?" + URLEncodedUtils.format(params, Consts.UTF_8);
+        if (flag.equals(Flag.UIC))
+            url = BaseTest.uicurl + uri + "?" + URLEncodedUtils.format(params, Consts.UTF_8);
 
         log.info("create httpget : " + url);
 
@@ -412,7 +406,7 @@ public class MyHttpClient {
     }
 
     public HttpResult get(String uri, Map<String, Object> params) {
-        return get(Flag.DTUIC, uri, params);
+        return get(Flag.UIC, uri, params);
 
     }
 
@@ -423,8 +417,8 @@ public class MyHttpClient {
      */
     public HttpResult get(Flag flag, String uri, Map<String, Object> params) {
         String url = "";
-        if (flag.equals(Flag.DTUIC))
-            url = BaseTest.dtuicurl + uri + "?";
+        if (flag.equals(Flag.UIC))
+            url = BaseTest.uicurl + uri + "?";
         for (String key : params.keySet()) {
             url += key + "=" + params.get(key) + "&";
         }
@@ -436,7 +430,7 @@ public class MyHttpClient {
     }
 
     public HttpResult get(String uri, List<NameValuePair> params, String... pathParams) {
-        return get(Flag.DTUIC, uri, params, pathParams);
+        return get(Flag.UIC, uri, params, pathParams);
     }
 
     /**
@@ -448,8 +442,8 @@ public class MyHttpClient {
      */
     public HttpResult get(Flag flag, String uri, List<NameValuePair> params, String... pathParams) {
         String url = "";
-        if (flag.equals(Flag.DTUIC))
-            url = BaseTest.dtuicurl + uri;
+        if (flag.equals(Flag.UIC))
+            url = BaseTest.uicurl + uri;
         for (String p : pathParams)
             url += "/" + p;
 
@@ -468,7 +462,7 @@ public class MyHttpClient {
 
 
     public HttpResult get(String uri, String... pathParams) {
-        return get(Flag.DTUIC, uri, pathParams);
+        return get(Flag.UIC, uri, pathParams);
     }
 
 
@@ -481,8 +475,8 @@ public class MyHttpClient {
      */
     public HttpResult get(Flag flag, String uri, String... pathParams) {
         String url = "";
-        if (flag.equals(Flag.DTUIC))
-            url = BaseTest.dtuicurl + uri;
+        if (flag.equals(Flag.UIC))
+            url = BaseTest.uicurl + uri;
         for (String p : pathParams)
             url += "/" + p;
 
@@ -494,13 +488,13 @@ public class MyHttpClient {
 
 
     public HttpResult get(String uri) {
-        return get(Flag.DTUIC, uri);
+        return get(Flag.UIC, uri);
     }
 
     public HttpResult get(Flag flag, String uri) {
         String url = "";
-        if (flag.equals(Flag.DTUIC))
-            url = BaseTest.dtuicurl + uri;
+        if (flag.equals(Flag.UIC))
+            url = BaseTest.uicurl + uri;
         if (flag.equals(Flag.UICAPI)) {
             url = BaseTest.uicapiurl + uri;
         }
@@ -508,25 +502,26 @@ public class MyHttpClient {
         HttpGet get = new HttpGet(url);
 
         log.info("create httpget : " + url);
+
         setHttpHeaderCookie(get);
 
         HttpResult response = invoke(get);
         setHttpResonseCookie(response);
         //System.out.println("response访问后获取的常规Cookie:=========");
-        
+
         checkResponseException(response, uri);
         return response;
 
     }
 
     public HttpResult gets(String uri, Map<Integer, Integer> params) {
-        return gets(Flag.DTUIC, uri, params);
+        return gets(Flag.UIC, uri, params);
     }
 
     public HttpResult gets(Flag flag, String uri, Map<Integer, Integer> params) {
         String url = "";
-        if (flag.equals(Flag.DTUIC))
-            url = BaseTest.dtuicurl + uri;
+        if (flag.equals(Flag.UIC))
+            url = BaseTest.uicurl + uri;
         for (Integer key : params.keySet()) {
             url += params.get(key) + "/";
         }
@@ -538,7 +533,7 @@ public class MyHttpClient {
     }
 
     public HttpResult options(String uri, Map<String, Object> params) {
-        return options(Flag.DTUIC, uri, params);
+        return options(Flag.UIC, uri, params);
     }
 
     /**
@@ -548,8 +543,8 @@ public class MyHttpClient {
      */
     public HttpResult options(Flag flag, String uri, Map<String, Object> params) {
         String url = "";
-        if (flag.equals(Flag.DTUIC))
-            url = BaseTest.dtuicurl + uri + "?";
+        if (flag.equals(Flag.UIC))
+            url = BaseTest.uicurl + uri + "?";
         for (String key : params.keySet()) {
             url += key + "=" + params.get(key) + "&";
         }
@@ -562,7 +557,7 @@ public class MyHttpClient {
     }
 
     public synchronized HttpResult upload(String uri, Map<String, Object> params, File file) throws ClientProtocolException, IOException {
-        return upload(Flag.DTUIC, uri, params, file);
+        return upload(Flag.UIC, uri, params, file);
     }
 
     /**
@@ -570,8 +565,8 @@ public class MyHttpClient {
      */
     public synchronized HttpResult upload(Flag flag, String uri, Map<String, Object> params, File file) throws ClientProtocolException, IOException {
         String url = "";
-        if (flag.equals(Flag.DTUIC))
-            url = BaseTest.dtuicurl + uri + "?";
+        if (flag.equals(Flag.UIC))
+            url = BaseTest.uicurl + uri + "?";
         if (params != null) {
             for (String key : params.keySet()) {
                 url += key + "=" + params.get(key) + "&";
@@ -589,14 +584,14 @@ public class MyHttpClient {
     }
 
     public HttpResult delete(String uri, String param) {
-        return delete(Flag.DTUIC, uri, param);
+        return delete(Flag.UIC, uri, param);
     }
 
     public HttpResult delete(Flag flag, String uri, String param) {
 
         String url = "";
-        if (flag.equals(Flag.DTUIC))
-            url = BaseTest.dtuicurl + uri + "/" + param;
+        if (flag.equals(Flag.UIC))
+            url = BaseTest.uicurl + uri + "/" + param;
         HttpDelete delete = new HttpDelete(url);
         log.info("create httpdelete : " + url);
 
@@ -604,13 +599,13 @@ public class MyHttpClient {
     }
 
     public HttpResult delete(String uri, Map<String, Object> params) {
-        return delete(Flag.DTUIC, uri, params);
+        return delete(Flag.UIC, uri, params);
     }
 
     public HttpResult delete(Flag flag, String uri, Map<String, Object> params) {
         String url = "";
-        if (flag.equals(Flag.DTUIC))
-            url = BaseTest.dtuicurl + uri + "?";
+        if (flag.equals(Flag.UIC))
+            url = BaseTest.uicurl + uri + "?";
         for (String key : params.keySet()) {
             url += key + "=" + params.get(key) + "&";
         }
@@ -860,8 +855,8 @@ public class MyHttpClient {
     public synchronized HttpResult post(Flag flag, String uri, List<NameValuePair> params, Map<String, String> pairs) {
         // 2. 创建请求方法的实例，并指定请求URL，添加请求参数。
         String url = "";
-        if (flag.equals(Flag.DTUIC))
-            url = BaseTest.dtuicurl + uri + "?";
+        if (flag.equals(Flag.UIC))
+            url = BaseTest.uicurl + uri + "?";
         for (int i = 0; i < params.size(); i++) {
             url += params.get(i).getName() + "=" + params.get(i).getValue() + "&";
         }
@@ -906,8 +901,8 @@ public class MyHttpClient {
     public synchronized HttpResult post(Flag flag, String uri, int param) {
         // 2. 创建请求方法的实例，并指定请求URL，添加请求参数。
         String url = "";
-        if (flag.equals(Flag.DTUIC))
-            url = BaseTest.dtuicurl + uri + param;
+        if (flag.equals(Flag.UIC))
+            url = BaseTest.uicurl + uri + param;
 
         HttpPost post = new HttpPost(url);
         post.addHeader("Content-type", "application/x-www-form-urlencoded");
@@ -928,8 +923,8 @@ public class MyHttpClient {
     public synchronized HttpResult put(Flag flag, String uri, String jsonObj) {
         // 2. 创建请求方法的实例，并指定请求URL，添加请求参数。
         String url = "";
-        if (flag.equals(Flag.DTUIC))
-            url = BaseTest.dtuicurl + uri;
+        if (flag.equals(Flag.UIC))
+            url = BaseTest.uicurl + uri;
 
         HttpPut put = new HttpPut(url);
         put.addHeader("Content-type", "application/json; charset=utf-8");

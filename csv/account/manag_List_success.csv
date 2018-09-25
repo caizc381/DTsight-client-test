@@ -1,5 +1,0 @@
-caseNum,rowCount,currentPage,pageSize,searchWord,code
-case01,-1,1,10,,200
-case02,-1,1,10,TJZX,200,搜索客户经理
-case03,-1,1,10,健康,200,搜索介绍人
-case04,-1,1,10,杭州蓝胜健康咨询有限公司,200,搜索挂账单位

@@ -1,5 +1,0 @@
-caseNum,hospitalId,matchStatus,searchWord,rowCount,currentPage,pageSize,description
-case01,1,false,,-1,1,10,未匹配项目列表
-case02,1,true,,-1,1,10,已匹配项目列表
-case03,1,true,B超,-1,1,10,已匹配项目列表中搜索
-case04,1,false,B超,-1,1,10,未匹配项目列表中搜索

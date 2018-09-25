@@ -1,6 +1,0 @@
-CASENUM,HospitalId,CompanyId,PayTime,Amount,Scene,Remark,Certificate
-case01,H,NULL,2017-12-18 11:11:11,30000,1,autoTest_医院开票300元,NULL
-case02,H,NULL,2017-11-11 12:11:11,-233,2,autoTest_账务调整-2.33元,NULL
-case03,H,COMPANYID,2017-12-16 00:00:00,334,1,autoTest_医院开票3.34元,NULL
-case04,H,COMPANYID,2017-12-11 00:00:00,-1,2,autoTest_自动化账务调整,http://test-i.oss-cn-shanghai.aliyuncs.com/settlement/certificate/69DF205BA59242CCAEFA95E48E62ABE6.txt
-case05,H,NULL,2018-03-12 12:12:12,300,5,autoTest_平台服务费,NULL

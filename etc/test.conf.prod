@@ -2,6 +2,6 @@
 check_db=true
 check_mongo=true
 
-[dtuic-info]
-username=caizc381@126.com
-password=Dpca36529
+[uic-info]
+username=admin@dtstack.com
+password=abc123123ABC

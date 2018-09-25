@@ -1,4 +1,0 @@
-caseNum,id,name,message,description
-case01,,,科室名字不能为空,科室名称为空，不能保存
-case02,,外科,"result",新建一个科室
-case03,,,科室已经存在,新建一个本体检中心已存在的科室

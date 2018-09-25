@@ -1,2 +1,0 @@
-CASENUM,CompanyId,CompanyPay,CompanyRefund,HospitalId,OnlinePay,OnlineRefund,PlatFormPay,PlatFormRefund,Prepayment,StartTime,EndTime,Status,PageSize
-case07,NULL,-1,-1,HOSPITALID,-1,-1,-1,-1,-1,NULL,2017-11-11,3,20,###结算批次（已撤销状态，全部单位）

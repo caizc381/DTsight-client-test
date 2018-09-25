@@ -23,9 +23,9 @@ public class ExtentManager extends BaseTest{
     public static void createInstance(String filePath) {
         extent = new ExtentReports();
 //        extent.setSystemInfo("os", "Linux");
-        int indexStart = dtuicurl.indexOf("//");
-    	int indexEnd = dtuicurl.indexOf(".");
-        extent.setSystemInfo("env",dtuicurl.substring(indexStart+2, indexEnd));
+        int indexStart = uicurl.indexOf("//");
+    	int indexEnd = uicurl.indexOf(".");
+        extent.setSystemInfo("env",uicurl.substring(indexStart+2, indexEnd));
         //extent.attachReporter(createHtmlReporter(filePath), createKlovReporter());
     }
 

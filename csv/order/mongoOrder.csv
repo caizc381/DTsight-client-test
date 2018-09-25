@@ -1,5 +1,0 @@
-CASENUM,rowCount,currentPage,pageSize,gte,lte,isExport,invoiceManagerQueryFlag,accountRelation.name,description
-case01,-1,1,10,,,true,committed,,已提交的开票申请
-case02,-1,1,10,-2,2,true,uncommitted,,只显示可开票订单
-case03,-1,1,10,-2,2,true,,,既未勾选“已体检的开票申请”，又未勾选“只显示可开票订单”
-case04,-1,1,10,-2,2,true,uncommitted,蔡,体检人搜索

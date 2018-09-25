@@ -1,5 +1,0 @@
-caseNum,examEndDate,examStartDate,insertEndTime,insertStartTime,hospitalId,orderStatuses,SettlenSign,showImmediatelyImpOrder
-case01,2018-01-03 23:59:59,2017-12-29 00:00:00,NULL,NULL,1,NULL,NULL,false,##体检时间查询
-case02,NULL,NULL,2018-02-03 23:59:59,2017-12-29 00:00:00,1,NULL,NULL,false,##下单时间查询
-case03,NULL,NULL,2018-02-03 23:59:59,2017-12-29 00:00:00,1,3#9,NULL,false,##下单时间查询 + 订单状态为部分退款/体检完成
-case04,2018-01-03 23:59:59,2017-12-29 00:00:00,NULL,NULL,1,NULL,4,false,##体检时间查询+未结算查询

@@ -1,4 +1,0 @@
-CASENUM,USERNAME,PASSWORD,RUN,CODE,MESSAGE
-case01,61,1mytijian2015,true,400,用户名或密码错误，请重新输入
-case02,,111111111a,true,400,请输入用户名
-case03,61,,true,400,请输入密码

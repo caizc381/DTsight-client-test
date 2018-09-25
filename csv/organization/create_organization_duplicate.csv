@@ -1,3 +1,0 @@
-CASENUM,OrganizationName,Type,ExamTel,GroupTel,ServiceTel,OpsTel,Provice,City,District,DetailAddress,Longitude,Latitude,CSITEURL,KEYWORDS,BREFIINFO,DETAILINFO,EXAMNOTE,ManageAccount,ManageName,ManageTel,ManageTel,organizationType
-case01,自动化测试03,民营品牌,12345678901,22345678901,32345678901,42345678901,浙江省,杭州市,西湖区,龙章路西溪花园蒹葭苑13幢611室,30.2899910000,120.0626730000,117,专业|体检中心,医院简介绍,医院详细介绍,体检须知,autotest1,自动化测试,12345678901,1,1
-case02,自动化测试03,民营品牌,12345678901,22345678901,32345678901,42345678901,浙江省,杭州市,西湖区,龙章路西溪花园蒹葭苑13幢611室,30.2899910000,120.0626730000,autotest1,专业|体检中心,医院简介绍,医院详细介绍,体检须知,61,自动化测试,12345678901,1,1

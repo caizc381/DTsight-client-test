@@ -1,2 +1,0 @@
-CaseNum,MealId,MealName,MealPrice,MealGender,ChangeDate,HidePrice,SendMsg,SitePay,VerifyFlag,Group,IdType,IdCard,Gender,Name,CompanyId,ExamItemIdList,CompanyMoney,payOnline,addAccountType,employeeId,mobile,reduceOrderPrice
-case01,12002,jsy套餐,4500,2,false,false,false,true,true,自动化测试组,1,150425198606195614,0,袁君,1585,,,false,idCard,,,

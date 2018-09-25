@@ -1,9 +1,0 @@
-caseNum,auditType,idCard,mobile,receivable,serialNumber,state,username,message
-case01,1,,,,,0,,未审核
-case02,2,,,,,1,,财务审核
-case03,0,,,,,3,,已完成
-case04,0,,,,,2#4,,已拒绝
-case05,0,,,,,,林an锐,按照姓名搜索
-case08,0,,,wwngzi86eleven@126.com,,,,按照支付宝账号搜索
-case09,0,,,6227001456180253201,,,,按照银行卡号搜索
-case10,0,,,,6227001456180253201,,,按照流水号搜索

@@ -16,15 +16,13 @@ import org.testng.Assert;
 public class DBMapper {
 
 	private static class DB {
-		public static  Connection connection;
-		public static  Connection examreportconnection;
-		public static  Connection opsconnection;
-
+		public static  Connection ideconnection;
+		public static  Connection uicconnection;
 		static {
 			DBHelper dbHelper = new DBHelper();;
 			try {
-				connection = dbHelper.getConnection();
-
+				ideconnection = dbHelper.getIdeConnection();
+				uicconnection=dbHelper.getUicConnection();
 
 			} catch (SqlException e) {
 				e.printStackTrace();
@@ -32,12 +30,14 @@ public class DBMapper {
 		}
 	}
 	
-	public static List<Map<String, Object>> queryOps(String sql, Object... params) throws SqlException {
+
+	
+	public static List<Map<String, Object>> queryUic(String sql, Object... params) throws SqlException {
 		QueryRunner run = new QueryRunner();
 		MapListHandler h = new MapListHandler();
 		List<Map<String, Object>> result = null;
 		try {
-			result = run.query(DB.opsconnection, sql, h, params);
+			result = run.query(DB.uicconnection, sql, h, params);
 		} catch (SQLException e) {
 			throw new SqlException("查询数据异常", e);
 		} 
@@ -45,35 +45,11 @@ public class DBMapper {
 		return result;
 	}
 	
-	public static void deleteOps(String sql,int x, Object... params) throws SqlException {
+	public static void deleteUic(String sql,int x, Object... params) throws SqlException {
 		QueryRunner run = new QueryRunner();
 		for(int i=1;i<=x;i++){
 			try {
-				run.update(DB.opsconnection, sql, params);
-			} catch (SQLException e) {
-				Assert.fail("删除数据错误");
-			}
-		}		
-	}
-	
-	public static List<Map<String, Object>> queryExamReport(String sql, Object... params) throws SqlException {
-		QueryRunner run = new QueryRunner();
-		MapListHandler h = new MapListHandler();
-		List<Map<String, Object>> result = null;
-		try {
-			result = run.query(DB.examreportconnection, sql, h, params);
-		} catch (SQLException e) {
-			throw new SqlException("查询数据异常", e);
-		} 
-
-		return result;
-	}
-	
-	public static void deleteExamReport(String sql,int x, Object... params) throws SqlException {
-		QueryRunner run = new QueryRunner();
-		for(int i=1;i<=x;i++){
-			try {
-				run.update(DB.examreportconnection, sql, params);
+				run.update(DB.uicconnection, sql, params);
 			} catch (SQLException e) {
 				Assert.fail("删除数据错误");
 			}
@@ -85,7 +61,7 @@ public class DBMapper {
 		MapListHandler h = new MapListHandler();
 		List<Map<String, Object>> result = null;
 		try {
-			result = run.query(DB.connection, sql, h, params);
+			result = run.query(DB.ideconnection, sql, h, params);
 		} catch (SQLException e) {
 			throw new SqlException("查询数据异常", e);
 		} 
@@ -97,7 +73,7 @@ public class DBMapper {
 		QueryRunner run = new QueryRunner();
 		for(int i=1;i<=x;i++){
 			try {
-				run.update(DB.connection, sql, params);
+				run.update(DB.ideconnection, sql, params);
 			} catch (SQLException e) {
 				Assert.fail("删除数据错误");
 			}
@@ -109,7 +85,7 @@ public class DBMapper {
 		QueryRunner run = new QueryRunner();
 		//MapListHandler h = new MapListHandler();
 			try {
-				run.update(DB.connection, sql, params);
+				run.update(DB.ideconnection, sql, params);
 			} catch (SQLException e) {
 				Assert.fail("修改数据错误");
 			}	

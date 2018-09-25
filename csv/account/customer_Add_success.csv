@@ -1,4 +1,0 @@
-caseNum,addAccountType,age,companyId,employeeId,group,idCard,name,gender,mobile,address,descriptioncaseNum,addAccountType,age,companyId,employeeId,group,idCard,name,gender,mobile,address,description
-case01,idCard,55,1585,,分组1,431127197708264852,国三测试,0,123456789011,浙江省杭州市西湖区西溪乐谷,身份证导入
-case02,employeeNo,33,1585,employ,分组1,,员工号测试,0,12345678901,浙江省杭州市西湖区西溪乐谷,员工号导入
-case03,other,33,1585,,分组1,,其他测试,0,12345678901,浙江省杭州市西湖区西溪乐谷,其他方式导入

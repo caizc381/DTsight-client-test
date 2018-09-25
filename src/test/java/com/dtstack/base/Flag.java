@@ -2,7 +2,7 @@ package com.dtstack.base;
 
 public enum Flag {
 
-	DTUIC(1),
+	UIC(1),
 	UICAPI(2),
 	IDE(3);
 	

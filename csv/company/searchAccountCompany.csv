@@ -1,4 +1,0 @@
-caseNum,rowCount,currentPage,pageSize,type,searchWord,description
-case01,-1,1,10,1,对外联络部,搜索存在的挂账单位名称
-case02,-1,1,10,1,元颐健康,搜索存在的挂账单位介绍人
-case03,-1,1,10,1,元颐健康11111,搜索不存在的挂账单位名称/介绍人

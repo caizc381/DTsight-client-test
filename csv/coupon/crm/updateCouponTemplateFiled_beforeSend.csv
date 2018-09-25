@@ -1,2 +1,0 @@
-CASE01,BatchNum,Name,Quantity,Price,Description,StartTime,EndTime,ReceiveLimitNumber,minLimintPrice,Source
-case01,NEW,自动化修改优惠券模板,20,100,修改优惠券描述,2018-06-01,2019-01-01,-1,20,0

@@ -1,6 +1,0 @@
-CASENUM,HospitalId,PROVINCEID,CITYID,DISTRICID
-case01,NULL,NULL,NULL,NULL,###所有城市的统计列表
-case02,NULL,440000,NULL,NULL,###广东省统计列表
-case03,NULL,330000,330100,NULL,###浙江省杭州市统计列表
-case04,NULL,330000,330100,330102,###浙江省杭州市上城区统计列表
-case05,1,330000,NULL,NULL,###搜索杭辽的统计列表

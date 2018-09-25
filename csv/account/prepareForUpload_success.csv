@@ -1,2 +1,0 @@
-caseNum,companyId,hospitalId,group,filepath,description
-case01,1585,,分组1,./csv/account/prepareForUpload_success.xlsx,上传一个多sheet的文件

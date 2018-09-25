@@ -1,3 +1,0 @@
-caseNum,CRMSPECIES,DISCOUNT,FOCUS,GENDER,DESCRIPTION,NAME,PRICE,SHOW,SYNCPRICE,TAGNAME,SHOWWARNING,WARNING,DETAIL,FITPEOPLE,UNFITPEOPLE,BOTTLENECK
-case01,1,TRUE,FALSE,2,描述,autotest,1000,TRUE,FALSE,tagA,TRUE,You're giving me a million reasons to let you go.You're giving me a million reasons to quit the show,详情,已婚,孕妇,false
-case02,2,FALSE,TRUE,1,描述,autotest,1000,FALSE,TRUE,tagB,FALSE,You're giving me a million reasons to let you go.You're giving me a million reasons to quit the show,详情,未婚,孕妇,false

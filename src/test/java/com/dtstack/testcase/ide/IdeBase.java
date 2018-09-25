@@ -1,8 +1,14 @@
 package com.dtstack.testcase.ide;
 
-import com.dtstack.base.*;
-import com.dtstack.base.dbcheck.TenantChecker;
-import com.dtstack.base.dbcheck.UserChecker;
+import com.dtstack.base.BaseTest;
+import com.dtstack.base.Flag;
+import com.dtstack.base.HttpResult;
+import com.dtstack.base.MyHttpClient;
+import com.dtstack.base.dbcheck.uic.account.TenantChecker;
+import com.dtstack.base.dbcheck.uic.account.UserChecker;
+import com.dtstack.model.enums.ide.TaskStatus;
+import com.dtstack.util.db.SqlException;
+import com.google.common.collect.Lists;
 import org.apache.http.Header;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -10,9 +16,9 @@ import org.apache.http.message.BasicNameValuePair;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
-import java.util.*;
-
-import com.dtstack.util.db.SqlException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 public class IdeBase extends BaseTest {
 
@@ -24,12 +30,16 @@ public class IdeBase extends BaseTest {
     public static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     public static SimpleDateFormat simplehms = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
+    public static final String OrderBy_JOBSUM = "jobSum";
+    public static final String OrderBy_STICK = "rps.stick";
+    public static final List<Integer> FAILED_STATUS = Lists.newArrayList(TaskStatus.FAILED.getStatus(), TaskStatus.SUBMITFAILD.getStatus());
+
 
     static {
         try {
             loadDefaultParams();
             httpclient = new MyHttpClient();
-            onceLoginInSystem(httpclient, Flag.DTUIC, defDtuicUsername, defDtuicPasswd);
+            onceLoginInSystem(httpclient, Flag.UIC, defUicUsername, defUicPasswd);
 
             // 通过jvm进程的关闭钩子关闭共用的httpclient
             Runtime.getRuntime().addShutdownHook(new Thread() {
@@ -45,8 +55,8 @@ public class IdeBase extends BaseTest {
 
     private static void loadDefaultParams() throws SqlException {
 
-        defDtuicUser = UserChecker.getUserByDTUicUserId(Integer.valueOf(defDtuicUserId));
-        defTenant = TenantChecker.getTenantByTenantId(Integer.valueOf(defTenantId));
+        defUicUser = UserChecker.getUserByUicUserId(defUicUserId);
+        defTenant = TenantChecker.getTenantByTenantId(defTenantId);
 
     }
 
@@ -63,7 +73,7 @@ public class IdeBase extends BaseTest {
         loginParams.add(pa3);
         loginParams.add(pa4);
         loginParams.add(pa5);
-        result = httpclient.post(Flag.DTUIC, Login, loginParams);
+        result = httpclient.post(Flag.UIC, Login, loginParams);
         return result;
     }
 

@@ -1,9 +1,0 @@
-caseNum,addAccountType,age,companyId,employeeId,gender,group,idCard,mobile,name,description,isNull
-case01,idCard,23,1585,,1,分组,411222197604235141,12345678952,平静枫,身份证导入,false
-case02,idCard,23,1585,,1,分组,411222197604235141,12345678952,平静枫1,身份证导入,false
-case03,idCard,23,1585,,1,分组,,12345678952,平静枫,随机身份证导入,false
-case04,employeeNo,34,1585,employ,0,分组33,,12345678901,史碧蓉,员工号导入,false
-case05,employeeNo,34,1585,employ,0,分组33,,12345678901,史碧蓉1,员工号导入,false
-case06,employeeNo,34,1585,employ,1,分组33,,12345678901,史碧蓉,员工号导入,false
-case07,other,45,1585,,1,分组33,,12345678901,裘桢国,其他方式导入,false
-case08,other,45,1585,,1,分组33,,12345678901,裘桢国,其他方式导入,true

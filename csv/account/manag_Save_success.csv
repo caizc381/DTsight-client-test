@@ -1,2 +1,0 @@
-caseNum,accountCompanyId,hospitalId,id,identity,importWithoutIdcard,isSitePay,keepLogin,mobile,name,orderImmediately,removeAllItems,roleId,username,code,message,agentService
-case01,1484,1,55741,identity,false,false,false,13501250125,江志雄,false,false,3,13588032278,200,{},false

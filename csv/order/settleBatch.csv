@@ -1,5 +1,0 @@
-CASENUM,rowCount,currentPage,pageSize,examStartDate,examEndDate,insertStartDate,insertEndDate,hospital,OrderStatus,SetteSign,showImmediatelyImpOrder,showExportable
-case01,-1,1,50,2018-01-02 00:00:00,2018-01-02 23:59:59,NULL,NULL,1,1#2#3#9#10#11,NULL,true,NULL,##体检时间搜索订单结算批次信息
-case02,-1,1,50,NULL,NULL,2017-12-02 00:00:00,2018-01-03 23:59:59,1,1#2#3#9#10#11,NULL,true,NULL,##插入时间搜索订单结算批次信息
-case03,-1,1,50,2017-11-02 00:00:00,2018-01-02 23:59:59,NULL,NULL,1,2#9,3,true,NULL,##体检时间+已预约/部分退款#已结算搜索订单结算批次信息
-case04,-1,1,50,2017-11-02 00:00:00,2018-01-02 23:59:59,NULL,NULL,1,NULL,3,true,NULL,##不勾选仅显示有效订单

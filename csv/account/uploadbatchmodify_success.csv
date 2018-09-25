@@ -1,2 +1,0 @@
-caseNum,hospitalId,companyId,managerId,sequences,changedName,changedGender,changedIdCard,changedEmployeeId,run,code,message
-case01,1,4400001,55788,192053,王前进,0,370302199307045355,101,true,200,{}

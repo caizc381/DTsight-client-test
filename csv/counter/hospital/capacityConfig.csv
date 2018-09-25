@@ -1,3 +1,0 @@
-CASENUM,offsetMonth,daysOfWeek,totalCount,limitItemCount,isPositive
-case01,1,2#3#4#5#6,250,25,true
-case02,1,2#3#4#5#6,250,25,false

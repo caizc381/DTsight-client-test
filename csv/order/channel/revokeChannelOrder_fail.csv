@@ -1,2 +1,0 @@
-caseNum,currentPage,examEndDate,examStartDate,insertEndTime,insertStartTime,isExport,fromSite,nameOrIdCard,orderStatuses,gender,isSelfMoneyZero,hospitalId,examCompanyId,pageSize,rowCount,message
-case01,1,2018-03-30 23:59:59,2017-01-01 00:00:00,,,,196,,3#9#10#110#0#5#6#7#8,,false,1,,10,-1,筛选已撤销的订单

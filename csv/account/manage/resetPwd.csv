@@ -1,3 +1,0 @@
-caseNum,rowCount,currentPage,pageSize,name,mobile,idCard,simplePasswd,description
-case01,-1,1,5,沈峰,,,false,重置密码
-case02,-1,1,5,,,340321197708013295,true,重置密码为6个1

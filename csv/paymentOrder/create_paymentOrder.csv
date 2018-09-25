@@ -1,3 +1,0 @@
-CASENUM,HosptialId,CrmUserName,PAYNAME,AMOUNT,IsWxPay,REMARK
-case01,1,61,张三,200,false,张三支付寶支付
-case02,1,61,李四,100,true,李四微信支付增加眼科视力单项

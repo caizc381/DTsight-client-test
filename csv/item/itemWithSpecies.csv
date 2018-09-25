@@ -1,6 +1,0 @@
-caseNum,hospitalId,type,isShowDelItem,description
-case01,1,1,false,CRM类别
-case02,1,-1,false,无CRM类别
-case03,1,0,false,无客户类别
-case04,1,2,false,客户类别
-case04,1,2,true,客户类别-显示废除项

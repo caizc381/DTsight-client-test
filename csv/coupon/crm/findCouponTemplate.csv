@@ -1,6 +1,0 @@
-CASENUM,OrganizationId,SearchKey,RowCount,CurrentPage,PageSize
-case01,DEFAULT,NULL,-1,1,10
-case02,DEFAULT,BATCHNUM,-1,1,10
-case03,DEFAULT,优惠券模板,-1,1,10
-case04,DEFAULT,刘海涵,-1,1,10
-case05,DEFAULT,NULL,-1,1,20

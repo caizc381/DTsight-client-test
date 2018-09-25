@@ -1,22 +1,20 @@
 package com.dtstack.testcase.uic;
 
 import com.dtstack.base.*;
-import org.apache.http.Header;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
 import java.io.*;
 import java.nio.charset.Charset;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 public class UicBase extends BaseTest {
     //public static MyHttpClient httpclient;
     static {
         try {
-            //loadDefaultParams();
-            //httpclient = new MyHttpClient();
-            onceLoginInSystem(httpclient, Flag.DTUIC,defDtuicUsername, defDtuicPasswd);
+            onceLoginInSystem(httpclient, Flag.UIC, defUicUsername, defUicPasswd);
 
             // 通过jvm进程的关闭钩子关闭共用的httpclient
             Runtime.getRuntime().addShutdownHook(new Thread() {
@@ -52,18 +50,15 @@ public class UicBase extends BaseTest {
         loginParams.add(pa3);
         loginParams.add(pa4);
         loginParams.add(pa5);
-        result = httpclient.post(Flag.DTUIC, Login, loginParams);
+        result = httpclient.post(Flag.UIC, Login, loginParams);
         return result;
     }
 
     /**
-     *
      * 将InputStream 转化为String
      *
-     * @param stream
-     *            inputstream
-     * @param utf8
-     *            字符集
+     * @param stream inputstream
+     * @param utf8   字符集
      * @return
      * @throws IOException
      */
@@ -104,8 +99,6 @@ public class UicBase extends BaseTest {
         beforeTime.add(Calendar.SECOND, -count);
         return simplehms.format(beforeTime.getTime());
     }
-
-
 
 
 }

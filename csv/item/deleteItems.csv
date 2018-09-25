@@ -1,4 +1,0 @@
-caseNum,type,isShowDelItem,mask,object
-case01,1,false,true,true
-case02,-1,false,true,true
-case03,0,false,true,true
