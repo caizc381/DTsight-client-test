@@ -130,6 +130,51 @@ public class ProjectChecker extends BaseTest {
         return projectDTOS;
     }
 
+    public static List<Project> listByIds(List<Long> projectIds) throws SqlException {
+        String projectIdStr = "";
+        for (int i = 0; i < projectIds.size(); i++) {
+            projectIdStr += projectIds.get(i) + ",";
+        }
+        if (!projectIdStr.equals("")) {
+            projectIdStr = StringUtil.removeCommaAtEnd(projectIdStr);
+        }
+
+        String sql = "select id ,tenant_id,project_name,project_alias,project_Identifier,project_desc,status,create_user_id,gmt_create,"
+                + " gmt_modified,is_deleted,project_type,produce_project_id,schedule_status"
+                + " from rdos_project where is_deleted=0 and id in (" + projectIdStr + ") and status=1 order by gmt_modified desc";
+        List<Map<String, Object>> list = DBMapper.query(sql);
+        List<Project> projects = new ArrayList<>();
+
+        for (int i = 0; i < list.size(); i++) {
+            Project project = map2Project(list.get(i));
+            projects.add(project);
+        }
+        return projects;
+    }
+
+    public static Project map2Project(Map<String, Object> map) {
+        Project project = new Project();
+        project.setId(Long.valueOf(map.get("id").toString()));
+        project.setTenantId(Long.valueOf(map.get("tenant_id").toString()));
+        project.setProjectName(map.get("project_name").toString());
+        project.setProjectAlias(map.get("project_alias").toString());
+        project.setProjectIdentifier(map.get("project_Identifier").toString());
+        if (map.get("project_desc")!=null){
+            project.setProjectDesc(map.get("project_desc").toString());
+        }
+
+        project.setStatus(Integer.valueOf(map.get("status").toString()));
+        project.setCreateUserId(Long.valueOf(map.get("create_user_id").toString()));
+        project.setIsDeleted(Integer.valueOf(map.get("is_deleted").toString()));
+        project.setProjectType(Integer.valueOf(map.get("project_type").toString()));
+        if (map.get("produce_project_id")!=null){
+            project.setProduceProjectId(Long.valueOf(map.get("produce_project_id").toString()));
+        }
+
+        project.setScheduleStatus(Integer.valueOf(map.get("schedule_status").toString()));
+        return project;
+    }
+
     public static ProjectDTO map2ProjectDTO(Map<String, Object> map) {
         ProjectDTO projectDTO = new ProjectDTO();
         projectDTO.setId(Long.valueOf(map.get("id").toString()));

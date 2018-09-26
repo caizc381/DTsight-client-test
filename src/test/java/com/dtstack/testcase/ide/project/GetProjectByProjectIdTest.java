@@ -9,12 +9,11 @@ import com.dtstack.testcase.ide.IdeBase;
 import com.dtstack.util.ListUtil;
 import org.apache.http.HttpStatus;
 import org.testng.Assert;
-import org.testng.annotations.Test;
 
 import java.util.List;
 
 public class GetProjectByProjectIdTest extends IdeBase {
-    @Test(dependsOnGroups = {"getAllProjects"},description = "获得项目详情",groups = {"qa"})
+    //@Test(dependsOnGroups = {"getAllProjects"},description = "获得项目详情",groups = {"qa"})
     public void test_01_getProjectByProjectId(){
         List<Project> projects = GetAllProjectsTest.projects;
 

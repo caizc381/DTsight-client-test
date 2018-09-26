@@ -4,7 +4,8 @@ public enum Flag {
 
 	UIC(1),
 	UICAPI(2),
-	IDE(3);
+	IDE(3),
+	CONSOLE(4);
 	
 	private int flagnum;
 	

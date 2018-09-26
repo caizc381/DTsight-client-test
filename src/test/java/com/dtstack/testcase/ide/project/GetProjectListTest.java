@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Set;
 
 public class GetProjectListTest extends IdeBase {
-    @Test(description = "根据名称，分页查询",groups = {"qa"},dataProvider = "getProjectList",dependsOnGroups = {"getProducts"})
+    @Test(description = "根据名称，分页查询",groups = {"qa"},dataProvider = "getProjectList")
     public void test_01_getProjectList(String... args) throws SqlException {
         String page = args[1];
         String pageSize = args[2];
@@ -44,8 +44,9 @@ public class GetProjectListTest extends IdeBase {
 
         HttpResult result = httpclient.post(Flag.IDE,IDE_GetProjectList,json);
         String body = result.getBody();
-        Assert.assertEquals(result.getCode(), HttpStatus.SC_OK);
         System.out.println(body);
+        Assert.assertEquals(result.getCode(), HttpStatus.SC_OK);
+
 
         List<ProjectDTO> projectDTOS = JSON.parseArray(JsonPath.read(body,"$.data.data").toString(),ProjectDTO.class);
 

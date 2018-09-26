@@ -144,6 +144,12 @@ public class MyHttpClient {
 
         setHttpResonseCookie(response);
         checkResponseException(response, uri);
+
+        System.out.println("============ request cookie===============");
+        System.out.println(Arrays.toString(post.getHeaders("Cookie")));
+
+        System.out.println("============ response cookie===============");
+        System.out.println(response.getHeader().get("Set-Cookie"));
         return response;
     }
 
@@ -179,7 +185,7 @@ public class MyHttpClient {
     }
 
     private void setHttpHeaderCookie(HttpRequestBase post) {
-
+    	System.out.println("getCookie() = "+ getCookie());
         post.addHeader("Cookie", getCookie());
     }
 
@@ -243,12 +249,17 @@ public class MyHttpClient {
         if (flag.equals(Flag.IDE)) {
             url = BaseTest.ideurl + uri;
         }
+        if (flag.equals(Flag.CONSOLE)) {
+        	url = BaseTest.consoleurl+uri;
+			
+		}
         HttpPost post = new HttpPost(url);
         post.addHeader("Content-type", "application/json; charset=utf-8");
         post.setHeader("Accept", "application/json");
-        //post.addHeader("Cookie",getCookie());
+        //post.addHeader("Cookie",ActionsDefine.cookieValue);
 
         setHttpHeaderCookie(post);
+
         log.info("jsonObj:" + jsonObj);
         post.setEntity(new StringEntity(jsonObj, Charset.forName("UTF-8")));
 

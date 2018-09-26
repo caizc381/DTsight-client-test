@@ -1,19 +1,21 @@
 package com.dtstack.util.db;
 
+import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.MapListHandler;
+import org.apache.log4j.Logger;
+import org.testng.Assert;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.commons.dbutils.QueryRunner;
-import org.apache.commons.dbutils.handlers.MapListHandler;
-import org.testng.Assert;
 
 /**
  *
  * @author linzhihao
  */
 public class DBMapper {
+	private static Logger logger = Logger.getLogger(DBMapper.class);
 
 	private static class DB {
 		public static  Connection ideconnection;
@@ -57,6 +59,7 @@ public class DBMapper {
 	}
 	
 	public static List<Map<String, Object>> query(String sql, Object... params) throws SqlException {
+		logger.info("sql ....  "+ sql);
 		QueryRunner run = new QueryRunner();
 		MapListHandler h = new MapListHandler();
 		List<Map<String, Object>> result = null;

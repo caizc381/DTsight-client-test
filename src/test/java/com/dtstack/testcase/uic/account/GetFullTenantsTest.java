@@ -13,7 +13,7 @@ import com.dtstack.model.po.uic.account.UserPO;
 import com.dtstack.model.po.uic.account.UserTenantRelPO;
 import com.dtstack.model.vo.uic.account.UserFullTenantAdminVo;
 import com.dtstack.model.vo.uic.account.UserFullTenantVo;
-import com.dtstack.testcase.uic.UicBase;
+import com.dtstack.testcase.UicBase;
 import com.dtstack.util.db.SqlException;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Lists;

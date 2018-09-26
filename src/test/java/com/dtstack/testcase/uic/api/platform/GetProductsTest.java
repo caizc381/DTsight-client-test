@@ -6,7 +6,7 @@ import com.dtstack.base.HttpResult;
 import com.dtstack.base.dbcheck.uic.platform.ProductChecker;
 import com.dtstack.model.po.uic.platform.ProductPO;
 import com.dtstack.model.vo.uic.platform.ProductVo;
-import com.dtstack.testcase.uic.UicBase;
+import com.dtstack.testcase.UicBase;
 import com.dtstack.util.db.SqlException;
 import com.jayway.jsonpath.JsonPath;
 import org.apache.http.HttpStatus;

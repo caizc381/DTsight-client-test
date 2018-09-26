@@ -16,7 +16,6 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.CountDownLatch;
 
-
 public class BaseTest implements ConfDefine, ActionsDefine {
 
     public static MyHttpClient httpclient;
@@ -37,6 +36,7 @@ public class BaseTest implements ConfDefine, ActionsDefine {
     public static String uicurl;
     public static String ideurl;
     public static String uicapiurl;
+    public static String consoleurl;
     //mysql-ide
     public static String ideDbUrl;
     public static String ideDbUser;
@@ -62,9 +62,13 @@ public class BaseTest implements ConfDefine, ActionsDefine {
     public static String defUicPasswd;
     public static Long defUicUserId;
     public static User defUicUser;
+    public static Long defRdosUserId;
     public static Long defTenantId;
+    public static Long defRdosTenantId;
     public static Tenant defTenant;
+    public static String defTenantName;
     public static String isAdmin;
+    public static String isTenantCreator;
 
 
     static {
@@ -79,6 +83,7 @@ public class BaseTest implements ConfDefine, ActionsDefine {
         uicurl = envConf.getValue(ConfDefine.UICSITE, ConfDefine.UICURL);
         ideurl = envConf.getValue(ConfDefine.IDESITE, ConfDefine.IDEURL);
         uicapiurl = envConf.getValue(ConfDefine.UICAPISITE, ConfDefine.UICAPIURL);
+        consoleurl = envConf.getValue(ConfDefine.CONSOLESITE, ConfDefine.CONSOLEURL);
 
         useStaf = ("yes".equals(testConf.getValue(PUBLIC, USE_STAF))
                 || "true".equals(testConf.getValue(PUBLIC, USE_STAF))) ? true : false;
@@ -87,9 +92,9 @@ public class BaseTest implements ConfDefine, ActionsDefine {
         ideDbUser = envConf.getValue(ConfDefine.DATABASE, ConfDefine.IDE_DB_USER);
         ideDbPwd = envConf.getValue(ConfDefine.DATABASE, ConfDefine.IDE_DB_PWD);
         //mysql-uic
-        uicDbUrl = envConf.getValue(ConfDefine.DATABASE,ConfDefine.UIC_DB_URL);
-        uicDbUser = envConf.getValue(ConfDefine.DATABASE,ConfDefine.UIC_DB_USER);
-        uicDbPwd=envConf.getValue(ConfDefine.DATABASE,ConfDefine.UIC_DB_PWD);
+        uicDbUrl = envConf.getValue(ConfDefine.DATABASE, ConfDefine.UIC_DB_URL);
+        uicDbUser = envConf.getValue(ConfDefine.DATABASE, ConfDefine.UIC_DB_USER);
+        uicDbPwd = envConf.getValue(ConfDefine.DATABASE, ConfDefine.UIC_DB_PWD);
 
         log.info("UIC URL:" + uicurl);
         log.info("IDE URL:" + ideurl);
@@ -111,8 +116,12 @@ public class BaseTest implements ConfDefine, ActionsDefine {
         defUicUsername = testConf.getValue(ConfDefine.UICINFO, ConfDefine.USERNAME);
         defUicPasswd = testConf.getValue(ConfDefine.UICINFO, ConfDefine.PASSWORD);
         defUicUserId = Long.valueOf(testConf.getValue(ConfDefine.UICINFO, ConfDefine.UICUSERID));
+        defRdosUserId = Long.valueOf(testConf.getValue(ConfDefine.UICINFO, ConfDefine.RDOSUSERID));
         defTenantId = Long.valueOf(testConf.getValue(ConfDefine.UICINFO, ConfDefine.TENANTID));
-        isAdmin=testConf.getValue(ConfDefine.UICINFO,ConfDefine.ISADMIN.equalsIgnoreCase("true")?"1":"0");
+        defRdosTenantId = Long.valueOf(testConf.getValue(ConfDefine.UICINFO, ConfDefine.RDOSTENANTID));
+        defTenantName = testConf.getValue(ConfDefine.UICINFO, ConfDefine.TENANTNAME);
+        isAdmin = testConf.getValue(ConfDefine.UICINFO, ConfDefine.ISADMIN).equalsIgnoreCase("true") ? "1" : "0";
+        isTenantCreator = testConf.getValue(ConfDefine.UICINFO, ConfDefine.ISTENANTCREATOR.equalsIgnoreCase("true") ? "1" : "0");
     }
 
     /**
