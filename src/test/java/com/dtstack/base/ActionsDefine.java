@@ -31,6 +31,8 @@ public interface ActionsDefine {
     public final static String Project_GetProjects = "/common/project/getProjects";//1.首页显示内容-不做权限设置;2.控制台顶端-项目下拉列表
     public final static String Project_CloseOrOpenSchedule = "/common/project/closeOrOpenSchedule";//开启或关闭调度
     public final static String Project_GetBindingProjects = "/common/project/getBindingProjects";//获取待绑定的项目列表
+    public final static String Project_BindingProject = "/common/project/bindingProject";//绑定测试环境和生产环境
+    public final static String Project_GetProjectUsers = "/common/project/getProjectUsers";//角色权限改版后，项目成员管理
 
     /******************************************************************************************
      *
@@ -44,7 +46,15 @@ public interface ActionsDefine {
      * IDE - Batch - BatchHiveCatalogue
      *
      * ****************************************************************************************/
-    public final static String BatchHive_GetHiveCatalogue = "/batch/batchHiveCatalogue/getHiveCatalogue";//获取租户下的类目
+    public final static String BatchHiveCatalogue_GetHiveCatalogue = "/batch/batchHiveCatalogue/getHiveCatalogue";//获取租户下的类目
+
+
+    /******************************************************************************************
+     *
+     * IDE - Batch - BatchTaskShade
+     *
+     * ****************************************************************************************/
+    public final static String  BatchTaskShade_PageQuery = "/batch/batchTaskShade/pageQuery";//分页查询已提交的任务
 
 
     //console

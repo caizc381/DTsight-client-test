@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class ProjectVO extends Project {
         private User createUser;
-        private List<User> adminUser;
+        private List<User> adminUsers;
         private List<User> memberUsers;
         private  String produceProject;
         private String testProject;
@@ -25,12 +25,12 @@ public class ProjectVO extends Project {
         this.createUser = createUser;
     }
 
-    public List<User> getAdminUser() {
-        return adminUser;
+    public List<User> getAdminUsers() {
+        return adminUsers;
     }
 
-    public void setAdminUser(List<User> adminUser) {
-        this.adminUser = adminUser;
+    public void setAdminUsers(List<User> adminUsers) {
+        this.adminUsers = adminUsers;
     }
 
     public List<User> getMemberUsers() {

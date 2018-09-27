@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.dtstack.base.Flag;
 import com.dtstack.base.HttpResult;
 import com.dtstack.base.dbcheck.ide.common.ProjectChecker;
+import com.dtstack.model.domain.ide.User;
 import com.dtstack.model.domain.ide.common.project.Project;
 import com.dtstack.model.enums.ide.ProjectType;
 import com.dtstack.model.vo.ide.ProjectVO;
@@ -15,6 +16,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -73,6 +75,38 @@ public class GetProjectByProjectIdTest extends IdeBase {
             Assert.assertEquals(projectVO.getTenantId(), resultProjectVO.getTenantId());
             Assert.assertEquals(projectVO.getTestProject(), resultProjectVO.getTestProject());
             Assert.assertEquals(projectVO.getTestProjectId(), resultProjectVO.getTestProjectId());
+
+            //adminUsers
+            List<User> adminUsers = projectVO.getAdminUsers();
+            List<User> resultAdminUsers = resultProjectVO.getAdminUsers();
+            Assert.assertEquals(adminUsers.size(), resultAdminUsers.size());
+
+            for (int i = 0; i < adminUsers.size(); i++) {
+                User adminUser = adminUsers.get(i);
+                User resultAdminUser = resultAdminUsers.get(i);
+
+                Assert.assertEquals(adminUser.getDefaultProjectId(), resultAdminUser.getDefaultProjectId());
+                Assert.assertEquals(adminUser.getDtuicUserId(), resultAdminUser.getDtuicUserId());
+                Assert.assertEquals(adminUser.getEmail(), resultAdminUser.getEmail());
+                Assert.assertEquals(adminUser.getId(), resultAdminUser.getId());
+                Assert.assertEquals(adminUser.getIsDeleted(), resultAdminUser.getIsDeleted());
+                Assert.assertEquals(adminUser.getPhoneNumber(), resultAdminUser.getPhoneNumber());
+                Assert.assertEquals(adminUser.getStatus(), resultAdminUser.getStatus());
+                Assert.assertEquals(adminUser.getUserName(), resultAdminUser.getUserName());
+            }
+
+
+            //createUser
+            User createUser = projectVO.getCreateUser();
+            User resultCreateUser = resultProjectVO.getCreateUser();
+            Assert.assertEquals(createUser.getDefaultProjectId(), resultCreateUser.getDefaultProjectId());
+            Assert.assertEquals(createUser.getDtuicUserId(), resultCreateUser.getDtuicUserId());
+            Assert.assertEquals(createUser.getEmail(), resultCreateUser.getEmail());
+            Assert.assertEquals(createUser.getId(), resultCreateUser.getId());
+            Assert.assertEquals(createUser.getIsDeleted(), resultCreateUser.getIsDeleted());
+            Assert.assertEquals(createUser.getPhoneNumber(), resultCreateUser.getPhoneNumber());
+            Assert.assertEquals(createUser.getStatus(), resultCreateUser.getStatus());
+            Assert.assertEquals(createUser.getUserName(), resultCreateUser.getUserName());
         }
     }
 }

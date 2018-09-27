@@ -32,7 +32,7 @@ public class GetHiveCatalogueTest extends IdeBase {
         Map<String, Object> params = new HashMap<>();
         params.put("isGetFile", isGetFile);
         String json = JSON.toJSONString(params);
-        HttpResult result = httpclient.post(Flag.IDE, BatchHive_GetHiveCatalogue, json);
+        HttpResult result = httpclient.post(Flag.IDE, BatchHiveCatalogue_GetHiveCatalogue, json);
         String body = result.getBody();
         System.out.println(body);
         Assert.assertEquals(result.getCode(), HttpStatus.SC_OK);

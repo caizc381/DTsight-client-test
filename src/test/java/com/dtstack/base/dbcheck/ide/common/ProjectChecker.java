@@ -261,7 +261,7 @@ public class ProjectChecker extends BaseTest {
         projectVO.setProjectType(project.getProjectType());
         projectVO.setScheduleStatus(project.getScheduleStatus());
         projectVO.setCreateUser(UserChecker.getOne(project.getCreateUserId()));
-        projectVO.setAdminUser(RoleUserChecker.getUserByRoleUser(RoleUserChecker.listRoleUserIsAdminByProjectId(project.getId())));
+        projectVO.setAdminUsers(RoleUserChecker.getUserByRoleUser(RoleUserChecker.listRoleUserIsAdminByProjectId(project.getId())));
         return projectVO;
     }
 }

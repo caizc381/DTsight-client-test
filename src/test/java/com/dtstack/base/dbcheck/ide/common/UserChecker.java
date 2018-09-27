@@ -29,7 +29,10 @@ public class UserChecker extends BaseTest {
             user.setDefaultProjectId(Long.valueOf(map.get("default_project_id").toString()));
         }
 
-        user.setPhoneNumber(map.get("phone_number").toString());
+        if (map.get("phone_number")!=null){
+            user.setPhoneNumber(map.get("phone_number").toString());
+        }
+
         return user;
     }
 }

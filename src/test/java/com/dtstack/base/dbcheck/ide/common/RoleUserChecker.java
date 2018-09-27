@@ -56,6 +56,24 @@ public class RoleUserChecker extends BaseTest {
         return roleUsers;
     }
 
+    public static List<RoleUser> listByTenantIdAndProjectIdAndUserName(Long tenantId, Long projectId, String userName) throws SqlException {
+        String sql = "select t.id,t.tenant_id,t.project_id,t.role_id,t.user_id,t.gmt_create,t.gmt_modified,t.is_deleted"
+                + " from rdos_role_user t left join rdos_user p on t.user_id=p.id"
+                + " where t.project_id=? and t.tenant_id=? and t.is_deleted=0";
+        if (userName != null && !userName.equals("")) {
+            sql += " and p.user_name=" + userName;
+        }
+
+        List<Map<String, Object>> list = DBMapper.query(sql, projectId, tenantId);
+        List<RoleUser> roleUsers = new ArrayList<>();
+
+        for (int i = 0; i < list.size(); i++) {
+            RoleUser roleUser = map2RoleUser(list.get(i));
+            roleUsers.add(roleUser);
+        }
+        return roleUsers;
+    }
+
     public static RoleUser map2RoleUser(Map<String, Object> map) throws SqlException {
         RoleUser roleUser = new RoleUser();
         roleUser.setRoleId(Long.valueOf(map.get("role_id").toString()));
