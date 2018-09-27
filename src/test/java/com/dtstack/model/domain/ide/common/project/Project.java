@@ -1,6 +1,8 @@
-package com.dtstack.model.domain.ide;
+package com.dtstack.model.domain.ide.common.project;
 
-public class Project extends BaseEntity{
+import com.dtstack.model.domain.ide.BaseEntity;
+
+public class Project extends BaseEntity {
 
     private String projectIdentifier;//项目标识
 

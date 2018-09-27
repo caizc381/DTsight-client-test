@@ -1,4 +1,6 @@
-package com.dtstack.model.domain.ide;
+package com.dtstack.model.domain.ide.batch;
+
+import com.dtstack.model.domain.ide.TenantProjectEntity;
 
 import java.sql.Timestamp;
 

@@ -68,6 +68,7 @@ public interface ConfDefine {
 
 	// uic-info
 	public final static String UICINFO="uic-info";
+	public final static String IDEINFO="ide-info";
 	public final static String CHECKDB = "check_db";
 	public final static String CHECKMONGO = "check_mongo";
 	public final static String USERNAME = "username";
@@ -79,6 +80,7 @@ public interface ConfDefine {
 	public final static String TENANTNAME="tenantname";
 	public final static String ISADMIN="isadmin";
 	public final static String ISTENANTCREATOR="istenantcreator";
-
+	public final static String PROJECTID="projectid";
+	public final static String PROJECTNAME="projectname";
 
 }

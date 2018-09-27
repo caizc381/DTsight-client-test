@@ -1,6 +1,6 @@
 package com.dtstack.model.vo.ide;
 
-import com.dtstack.model.domain.ide.Project;
+import com.dtstack.model.domain.ide.common.project.Project;
 import com.dtstack.model.domain.ide.User;
 
 import java.util.List;

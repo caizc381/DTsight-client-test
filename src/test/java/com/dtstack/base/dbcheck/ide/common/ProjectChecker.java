@@ -2,9 +2,10 @@ package com.dtstack.base.dbcheck.ide.common;
 
 import com.dtstack.base.BaseTest;
 import com.dtstack.dtcenter.common.pager.PageQuery;
-import com.dtstack.model.domain.ide.Project;
+import com.dtstack.model.domain.ide.common.project.Project;
 import com.dtstack.model.domain.ide.RoleUser;
 import com.dtstack.model.dto.ide.ProjectDTO;
+import com.dtstack.model.vo.ide.ProjectVO;
 import com.dtstack.util.StringUtil;
 import com.dtstack.util.db.DBMapper;
 import com.dtstack.util.db.SqlException;
@@ -19,6 +20,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ProjectChecker extends BaseTest {
+    private static String selectContentFragment = "id,tenant_id,project_name,project_alias,project_Identifier,project_desc,status,create_user_id,gmt_create,"
+            + "gmt_modified,is_deleted,project_type,produce_project_id,schedule_status";
+
     public static List<Project> getAllProjectByTenantId(Long tenantId) throws SqlException {
         List<Project> projects = new ArrayList<>();
         String sql = "select rp.id,rp.tenant_id,rp.project_name,rp.project_alias,rp.project_Identifier,"
@@ -152,6 +156,55 @@ public class ProjectChecker extends BaseTest {
         return projects;
     }
 
+    public static List<Project> listByIdsAndTenantId(List<Long> projectIds, Long tenantId) throws SqlException {
+        String sql = "select rp.id,rp.tenant_id,rp.project_name,rp.project_alias,rp.project_Identifier,rp.project_Desc,"
+                + " rp.status,rp.create_user_id,rp.gmt_create,rp.gmt_modified,rp.is_deleted,rp.project_type,rp.produce_project_id,"
+                + " rp.schedule_status from rdos_project rp left join rdos_project_stick rps on rps.project_id=rp.id "
+                + " where rp.is_deleted=0 and rp.tenant_id=? ";
+        String projectIdStr = "";
+        for (int i = 0; i < projectIds.size(); i++) {
+            projectIdStr += projectIds.get(i) + ",";
+        }
+        if (!projectIdStr.equals("")) {
+            projectIdStr = StringUtil.removeCommaAtEnd(projectIdStr);
+            sql += "and rp.id in (" + projectIdStr + ")";
+        }
+        sql += "order by rps.stick desc ,rp.gmt_modified desc";
+
+        List<Map<String, Object>> list = DBMapper.query(sql, tenantId);
+        List<Project> projects = new ArrayList<>();
+
+        for (int i = 0; i < list.size(); i++) {
+            Project project = map2Project(list.get(i));
+            projects.add(project);
+        }
+        return projects;
+    }
+
+    public static Project getOne(Long projectId) throws SqlException {
+        String sql = "select " + selectContentFragment + " from rdos_project where is_deleted=0 and id=?";
+        List<Map<String, Object>> list = DBMapper.query(sql, projectId);
+
+        Project project = map2Project(list.get(0));
+        return project;
+    }
+
+    public static List<Project> listByType(Long tenantId, String name, Integer projectType) throws SqlException {
+        String sql = "select " + selectContentFragment + " from rdos_project where project_type=? and tenant_id=?"
+                + " and is_deleted=0 and status=1";
+        if (name != null && !name.equals("")) {
+            sql += " and project_alias like '%" + name + "%'";
+        }
+        List<Map<String, Object>> list = DBMapper.query(sql, projectType, tenantId);
+        List<Project> projects = new ArrayList<>();
+
+        for (int i = 0; i < list.size(); i++) {
+            Project project = map2Project(list.get(i));
+            projects.add(project);
+        }
+        return projects;
+    }
+
     public static Project map2Project(Map<String, Object> map) {
         Project project = new Project();
         project.setId(Long.valueOf(map.get("id").toString()));
@@ -159,7 +212,7 @@ public class ProjectChecker extends BaseTest {
         project.setProjectName(map.get("project_name").toString());
         project.setProjectAlias(map.get("project_alias").toString());
         project.setProjectIdentifier(map.get("project_Identifier").toString());
-        if (map.get("project_desc")!=null){
+        if (map.get("project_desc") != null) {
             project.setProjectDesc(map.get("project_desc").toString());
         }
 
@@ -167,13 +220,14 @@ public class ProjectChecker extends BaseTest {
         project.setCreateUserId(Long.valueOf(map.get("create_user_id").toString()));
         project.setIsDeleted(Integer.valueOf(map.get("is_deleted").toString()));
         project.setProjectType(Integer.valueOf(map.get("project_type").toString()));
-        if (map.get("produce_project_id")!=null){
+        if (map.get("produce_project_id") != null) {
             project.setProduceProjectId(Long.valueOf(map.get("produce_project_id").toString()));
         }
 
         project.setScheduleStatus(Integer.valueOf(map.get("schedule_status").toString()));
         return project;
     }
+
 
     public static ProjectDTO map2ProjectDTO(Map<String, Object> map) {
         ProjectDTO projectDTO = new ProjectDTO();
@@ -189,5 +243,25 @@ public class ProjectChecker extends BaseTest {
         projectDTO.setJobSum(Integer.valueOf(map.get("jobSum").toString()));
         projectDTO.setStick(Timestamp.valueOf(map.get("stick").toString()));
         return projectDTO;
+    }
+
+    public static ProjectVO projectMap2ProjectVO(Project project) throws SqlException {
+        ProjectVO projectVO = new ProjectVO();
+        projectVO.setProjectName(project.getProjectName());
+        projectVO.setProjectIdentifier(project.getProjectIdentifier());
+        projectVO.setProjectDesc(project.getProjectDesc());
+        projectVO.setId(project.getId());
+        projectVO.setCreateUserId(project.getCreateUserId());
+        projectVO.setTenantId(project.getTenantId());
+        projectVO.setStatus(project.getStatus());
+        projectVO.setGmtCreate(project.getGmtCreate());
+        projectVO.setGmtModified(project.getGmtModified());
+        projectVO.setProjectAlias(project.getProjectAlias());
+        projectVO.setProduceProjectId(project.getProduceProjectId());
+        projectVO.setProjectType(project.getProjectType());
+        projectVO.setScheduleStatus(project.getScheduleStatus());
+        projectVO.setCreateUser(UserChecker.getOne(project.getCreateUserId()));
+        projectVO.setAdminUser(RoleUserChecker.getUserByRoleUser(RoleUserChecker.listRoleUserIsAdminByProjectId(project.getId())));
+        return projectVO;
     }
 }

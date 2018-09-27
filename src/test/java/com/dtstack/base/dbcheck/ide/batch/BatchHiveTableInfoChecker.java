@@ -1,7 +1,8 @@
 package com.dtstack.base.dbcheck.ide.batch;
 
 import com.dtstack.base.BaseTest;
-import com.dtstack.model.domain.ide.BatchHiveTableInfo;
+import com.dtstack.model.domain.ide.batch.BatchHiveTableInfo;
+import com.dtstack.model.domain.ide.batch.HiveTableCataloguePO;
 import com.dtstack.util.StringUtil;
 import com.dtstack.util.db.DBMapper;
 import com.dtstack.util.db.SqlException;
@@ -9,7 +10,7 @@ import com.dtstack.util.db.SqlException;
 import java.sql.Timestamp;
 import java.util.*;
 
-public class BatchHiveTableChecker extends BaseTest {
+public class BatchHiveTableInfoChecker extends BaseTest {
 
     //表数量
     public static Integer countByProjectIds(Collection<Long> ids, Long tenantId) throws SqlException {
@@ -51,6 +52,33 @@ public class BatchHiveTableChecker extends BaseTest {
         }
         return batchHiveTableInfoList;
     }
+
+    public static List<HiveTableCataloguePO> listByCatalogueId(Long catalogueId) throws SqlException {
+        String sql = "select rhti.id,rhti.table_name,rhti.path,rhti.catalogue_id,rhti.tenant_id,rhc.level"
+                + " from rdos_hive_table_info_rhti left join rdos_hive_catalogue rhc on rhti.catalogue_id = rhc.id"
+                + " where rhti.catalogue_id = ? and rhti.is_deleted=0 and rhti.is_dirty_data_table=0";
+        List<Map<String, Object>> list = DBMapper.query(sql, catalogueId);
+
+        List<HiveTableCataloguePO> hiveTableCataloguePOS = new ArrayList<>();
+
+        for (int i = 0; i < list.size(); i++) {
+            HiveTableCataloguePO hiveTableCataloguePO = map2HiveTableCataloguePO(list.get(i));
+            hiveTableCataloguePOS.add(hiveTableCataloguePO);
+        }
+        return hiveTableCataloguePOS;
+
+    }
+
+    public static HiveTableCataloguePO map2HiveTableCataloguePO(Map<String, Object> map) {
+        HiveTableCataloguePO hiveTableCataloguePO = new HiveTableCataloguePO();
+        hiveTableCataloguePO.setId(Long.valueOf(map.get("id").toString()));
+        hiveTableCataloguePO.setPath(map.get("path").toString());
+        hiveTableCataloguePO.setCatalogueId(Long.valueOf(map.get("catalogue_id").toString()));
+        hiveTableCataloguePO.setTenantId(Long.valueOf(map.get("tenant_id").toString()));
+        hiveTableCataloguePO.setLevel(Integer.valueOf(map.get("level").toString()));
+        return hiveTableCataloguePO;
+    }
+
 
     public static BatchHiveTableInfo map2BatchHiveTableInfo(Map<String, Object> map) {
         BatchHiveTableInfo batchHiveTableInfo = new BatchHiveTableInfo();

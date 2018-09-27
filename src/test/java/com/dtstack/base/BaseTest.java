@@ -69,6 +69,8 @@ public class BaseTest implements ConfDefine, ActionsDefine {
     public static String defTenantName;
     public static String isAdmin;
     public static String isTenantCreator;
+    public static Long defProjectId;
+    public static String defProjectName;
 
 
     static {
@@ -116,12 +118,15 @@ public class BaseTest implements ConfDefine, ActionsDefine {
         defUicUsername = testConf.getValue(ConfDefine.UICINFO, ConfDefine.USERNAME);
         defUicPasswd = testConf.getValue(ConfDefine.UICINFO, ConfDefine.PASSWORD);
         defUicUserId = Long.valueOf(testConf.getValue(ConfDefine.UICINFO, ConfDefine.UICUSERID));
-        defRdosUserId = Long.valueOf(testConf.getValue(ConfDefine.UICINFO, ConfDefine.RDOSUSERID));
         defTenantId = Long.valueOf(testConf.getValue(ConfDefine.UICINFO, ConfDefine.TENANTID));
-        defRdosTenantId = Long.valueOf(testConf.getValue(ConfDefine.UICINFO, ConfDefine.RDOSTENANTID));
-        defTenantName = testConf.getValue(ConfDefine.UICINFO, ConfDefine.TENANTNAME);
-        isAdmin = testConf.getValue(ConfDefine.UICINFO, ConfDefine.ISADMIN).equalsIgnoreCase("true") ? "1" : "0";
-        isTenantCreator = testConf.getValue(ConfDefine.UICINFO, ConfDefine.ISTENANTCREATOR.equalsIgnoreCase("true") ? "1" : "0");
+
+        defRdosUserId = Long.valueOf(testConf.getValue(ConfDefine.IDEINFO, ConfDefine.RDOSUSERID));
+        defRdosTenantId = Long.valueOf(testConf.getValue(ConfDefine.IDEINFO, ConfDefine.RDOSTENANTID));
+        defTenantName = testConf.getValue(ConfDefine.IDEINFO, ConfDefine.TENANTNAME);
+        isAdmin = testConf.getValue(ConfDefine.IDEINFO, ConfDefine.ISADMIN).equalsIgnoreCase("true") ? "1" : "0";
+        isTenantCreator = testConf.getValue(ConfDefine.IDEINFO, ConfDefine.ISTENANTCREATOR.equalsIgnoreCase("true") ? "1" : "0");
+        defProjectId = Long.valueOf(testConf.getValue(ConfDefine.IDEINFO, ConfDefine.PROJECTID));
+        defProjectName=testConf.getValue(ConfDefine.IDEINFO,ConfDefine.PROJECTNAME);
     }
 
     /**

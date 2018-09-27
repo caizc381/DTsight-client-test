@@ -19,10 +19,7 @@ import org.testng.annotations.Test;
 
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class GetProjectListTest extends IdeBase {
     @Test(description = "根据名称，分页查询",groups = {"qa"},dataProvider = "getProjectList")
@@ -40,9 +37,12 @@ public class GetProjectListTest extends IdeBase {
             orderBy = OrderBy_STICK;
         }
 
-        String json = "{page:"+page +",pageSize:"+pageSize+"}";
+        Map<String,Object> params = new HashMap<>();
+        params.put("page",page);
+        params.put("pageSize",pageSize);
+        String json = JSON.toJSONString(params);
 
-        HttpResult result = httpclient.post(Flag.IDE,IDE_GetProjectList,json);
+        HttpResult result = httpclient.post(Flag.IDE,Project_GetProjectList,json);
         String body = result.getBody();
         System.out.println(body);
         Assert.assertEquals(result.getCode(), HttpStatus.SC_OK);
@@ -52,12 +52,12 @@ public class GetProjectListTest extends IdeBase {
 
         if (checkdb){
             //获取该userId下的projectIds
-            Set<Long> userProjectIds = ProjectChecker.getUsefulProjectIds(defUicUserId,defTenantId,Boolean.valueOf(isAdmin));
+           /* Set<Long> userProjectIds = ProjectChecker.getUsefulProjectIds(defUicUserId,defTenantId,Boolean.valueOf(isAdmin));
             PageQuery pageQuery = new PageQuery(Integer.valueOf(page),Integer.valueOf(pageSize),orderBy,sort);
             List<Long> userProjectIdArrayList = new ArrayList<>();
             userProjectIdArrayList.addAll(userProjectIds);
             List<ProjectDTO> resultProjectDTOS = ProjectChecker.listJobSumByIdsAndFuzzyName(userProjectIdArrayList,"",FAILED_STATUS,pageQuery,defTenantId);
-            Assert.assertEquals(projectDTOS.size(),resultProjectDTOS.size());
+            Assert.assertEquals(projectDTOS.size(),resultProjectDTOS.size());*/
         }
     }
 

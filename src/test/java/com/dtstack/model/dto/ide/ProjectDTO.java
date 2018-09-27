@@ -1,6 +1,6 @@
 package com.dtstack.model.dto.ide;
 
-import com.dtstack.model.domain.ide.Project;
+import com.dtstack.model.domain.ide.common.project.Project;
 
 import java.sql.Timestamp;
 import java.util.Map;

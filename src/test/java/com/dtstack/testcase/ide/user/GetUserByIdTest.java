@@ -19,11 +19,14 @@ import org.testng.annotations.Test;
 
 import java.util.List;
 import java.util.Map;
+/**
+ * 位置：点击开发套件的请求
+ */
 
 public class GetUserByIdTest extends IdeBase {
     @Test(description = "根据用户id获取用户信息", groups = {"qa"})
     public void test_01_getuserById() throws SqlException {
-        HttpResult result = httpclient.post(Flag.IDE, IDE_GetUserById, "");
+        HttpResult result = httpclient.post(Flag.IDE, User_GetUserById, "");
 
         String body = result.getBody();
         System.out.println(body);
