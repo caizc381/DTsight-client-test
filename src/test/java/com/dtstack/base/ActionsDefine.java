@@ -54,7 +54,28 @@ public interface ActionsDefine {
      * IDE - Batch - BatchTaskShade
      *
      * ****************************************************************************************/
-    public final static String  BatchTaskShade_PageQuery = "/batch/batchTaskShade/pageQuery";//分页查询已提交的任务
+    public final static String BatchTaskShade_PageQuery = "/batch/batchTaskShade/pageQuery";//分页查询已提交的任务
+
+    /******************************************************************************************
+     *
+     * IDE - Batch - BatchResource
+     *
+     * ****************************************************************************************/
+    public final static String BatchResource_PageQuery = "/batch/batchResource/pageQuery";//资源分页查询
+
+    /******************************************************************************************
+     *
+     * IDE - Batch - BatchFunction
+     *
+     * ****************************************************************************************/
+    public final static String BatchFunction_PageQuery = "/batch/batchFunction/pageQuery";//自定义函数分页查询
+
+    /******************************************************************************************
+     *
+     * IDE - Batch - BatchHiveTableInfo
+     *
+     * ****************************************************************************************/
+    public final static String BatchHiveTableInfo_SimplePageQuery = "batch/batchHiveTableInfo/simplePageQuery";//表分页查询
 
 
     //console

@@ -8,14 +8,13 @@ import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.testng.Assert;
-import org.testng.annotations.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SwitchTenantTest extends UicBase {
 
-    @Test(description = "切换租户", groups = {"qa","switchTenant"}, dependsOnGroups = {"getProducts"})
+    //@Test(description = "切换租户", groups = {"qa","switchTenant"}, dependsOnGroups = {"getProducts"})
     public void test_01_switchTenant() {
         List<UserFullTenantVo> userFullTenantVos = GetFullTenantsTest.userFullTenantVos;
 

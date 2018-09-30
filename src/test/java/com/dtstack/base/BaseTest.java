@@ -63,6 +63,7 @@ public class BaseTest implements ConfDefine, ActionsDefine {
     public static Long defUicUserId;
     public static User defUicUser;
     public static Long defRdosUserId;
+    public static User defRdosUser;
     public static Long defTenantId;
     public static Long defRdosTenantId;
     public static Tenant defTenant;

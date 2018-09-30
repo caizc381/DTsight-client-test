@@ -2,10 +2,10 @@ package com.dtstack.base.dbcheck.ide.common;
 
 import com.dtstack.base.BaseTest;
 import com.dtstack.dtcenter.common.pager.PageQuery;
-import com.dtstack.model.domain.ide.common.project.Project;
+import com.dtstack.model.domain.ide.common.Project;
 import com.dtstack.model.domain.ide.RoleUser;
-import com.dtstack.model.dto.ide.ProjectDTO;
-import com.dtstack.model.vo.ide.ProjectVO;
+import com.dtstack.model.dto.ide.common.ProjectDTO;
+import com.dtstack.model.vo.ide.common.ProjectVO;
 import com.dtstack.util.StringUtil;
 import com.dtstack.util.db.DBMapper;
 import com.dtstack.util.db.SqlException;

@@ -4,7 +4,7 @@ import com.dtstack.base.BaseTest;
 import com.dtstack.base.Flag;
 import com.dtstack.base.dbcheck.uic.account.TenantChecker;
 import com.dtstack.base.dbcheck.uic.account.UserChecker;
-import com.dtstack.model.enums.ide.TaskStatus;
+import com.dtstack.model.enums.ide.common.TaskStatus;
 import com.dtstack.util.db.SqlException;
 import com.google.common.collect.Lists;
 
@@ -37,6 +37,8 @@ public class UicBase extends BaseTest {
     }
 
     private static void loadDefaultParams() throws SqlException {
+        defUicUser = UserChecker.getUserByUicUserId(defUicUserId);
+        defTenant = TenantChecker.getTenantByTenantId(defTenantId);
         defUicUser = UserChecker.getUserByUicUserId(defUicUserId);
         defTenant = TenantChecker.getTenantByTenantId(defTenantId);
     }

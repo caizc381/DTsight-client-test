@@ -1,8 +1,5 @@
 package com.dtstack.listener;
 
-import com.dtstack.annotations.DeepHospital;
-import com.dtstack.base.ConfDefine;
-import com.dtstack.util.ConfParser;
 import org.apache.log4j.Logger;
 import org.testng.*;
 

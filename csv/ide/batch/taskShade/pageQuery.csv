@@ -1,0 +1,5 @@
+caseNum,endTime,pageIndex,pageSize,startTime,taskModifyUserId,taskName,description
+case01,2018-09-28,1,20,2018-08-29,,,按照时间搜索
+case02,2018-09-28,1,20,2018-08-29,5,test,按照时间&修改人&发布对象搜索
+case03,,1,20,,5,test,按照修改人&发布对象搜索
+case04,,1,20,,,,按照对象类型搜索

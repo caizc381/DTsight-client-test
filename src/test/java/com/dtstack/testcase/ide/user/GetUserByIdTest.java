@@ -8,7 +8,7 @@ import com.dtstack.base.dbcheck.ide.common.RoleUserChecker;
 import com.dtstack.base.dbcheck.ide.common.UserChecker;
 import com.dtstack.model.domain.ide.RoleUser;
 import com.dtstack.model.domain.ide.User;
-import com.dtstack.model.enums.ide.RoleValue;
+import com.dtstack.model.enums.ide.common.RoleValue;
 import com.dtstack.testcase.ide.IdeBase;
 import com.dtstack.util.db.SqlException;
 import com.jayway.jsonpath.JsonPath;

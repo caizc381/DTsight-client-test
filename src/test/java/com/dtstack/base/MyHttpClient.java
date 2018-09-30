@@ -122,6 +122,10 @@ public class MyHttpClient {
         return post(Flag.UIC, uri, params);
     }
 
+    public synchronized HttpResult post(Flag flag,String uri){
+        return post(Flag.IDE,uri,new ArrayList<>());
+    }
+
     /**
      * HTTP POST请求。
      *
@@ -130,6 +134,8 @@ public class MyHttpClient {
      */
     public synchronized HttpResult post(Flag flag, String uri, List<NameValuePair> params) {
         String url = "";
+        if (flag.equals(Flag.IDE))
+            url = BaseTest.ideurl + uri;
         if (flag.equals(Flag.UIC))
             url = BaseTest.uicurl + uri;
 
